@@ -1,23 +1,23 @@
-import style from './Navbar.module.css';
+import style from "./Navbar.module.css";
 
 export const Navbar = () => {
   return (
     <nav className={style.nav}>
       <ul>
         <li className={`${style.item} ${style.active}`}>
-          <a href="src/components/Navbar/Navbar#c">Profile</a>
+          <a href="/profile">Profile</a>
         </li>
         <li className={style.item}>
-          <a href="src/components/Navbar/Navbar#c">Messages</a>
+          <a href="/dialogs">Messages</a>
         </li>
         <li className={style.item}>
-          <a href="src/components/Navbar/Navbar#c">News</a>
+          <a href="/news">News</a>
         </li>
         <li className={style.item}>
-          <a href="src/components/Navbar/Navbar#c">Music</a>
+          <a href="/music">Music</a>
         </li>
         <li className={style.item}>
-          <a href="src/components/Navbar/Navbar#c">Settings</a>
+          <a href="/settings">Settings</a>
         </li>
       </ul>
     </nav>
