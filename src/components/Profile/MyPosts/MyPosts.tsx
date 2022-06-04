@@ -3,12 +3,13 @@ import { Post } from './Post/Post';
 
 export const MyPosts = () => {
   return (
-    <div>
-      my posts
+    <div className={style['posts-box']}>
+      <h3>my posts</h3>
       <div>
-        <textarea></textarea>
+        <div>
+          <textarea></textarea>
+        </div>
         <button>Add post</button>
-        <button>Remove</button>
       </div>
       <div className={style.posts}>
         <Post message="Hi, how are your?" likesCount={1}/>
