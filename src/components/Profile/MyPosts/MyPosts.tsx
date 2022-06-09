@@ -1,16 +1,14 @@
 import style from './MyPosts.module.css';
 import { Post } from './Post/Post';
+import { PostType } from '../Profile';
 
-export const MyPosts = () => {
-  const posts = [
-    { id: 1, message: "Hi, how are your?", likesCount: 12 },
-    { id: 2, message: "It's my first post", likesCount: 5 },
-    { id: 3, message: "Cat!", likesCount: 5 },
-  ];
+type MyPostsPropsType = {
+  posts: Array<PostType>;
+}
 
-  const postsElements = posts
+export const MyPosts = (props: MyPostsPropsType) => {
+  const postsElements = props.posts
     .map((post) => <Post message={post.message} likesCount={post.likesCount}/>)
-
 
   return (
     <div className={style['posts-box']}>
