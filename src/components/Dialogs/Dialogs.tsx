@@ -1,34 +1,20 @@
 import style from "./Dialogs.module.css";
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
+import { DialogType, MessageType } from '../../index';
 
-type DialogItemPropsType = {
-  name: string;
-  id: number;
-};
+type DialogsPropsType = {
+  messages: Array<MessageType>;
+  dialogs: Array<DialogType>
+}
 
-export const Dialogs = () => {
+export const Dialogs = (props: DialogsPropsType) => {
 
-  const dialogsData = [
-    { id: 1, name: "Brendan" },
-    { id: 2, name: "Milada" },
-    { id: 3, name: "Vera" },
-    { id: 4, name: "Vita" },
-    { id: 5, name: "Maks" },
-    { id: 6, name: "Viktoria" },
-  ];
+  const dialogsElements = props.dialogs
+    .map((dialog) => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />)
 
-  const messages = [
-    { id: 1, massage: "Hi" },
-    { id: 2, massage: "How is your morris?" },
-    { id: 3, massage: "Любо!" },
-  ];
-
-  const dialogsElements = dialogsData
-    .map((dialog) => <DialogItem name={dialog.name} id={dialog.id} />)
-
-  const messagesElements = messages
-    .map((message) => <Message message={message.massage} />)
+  const messagesElements = props.messages
+    .map((message) => <Message message={message.message} key={message.id}/>)
 
   return (
     <div className={style.dialogs}>

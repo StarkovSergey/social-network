@@ -1,24 +1,17 @@
 import style from "./Profile.module.css";
 import { MyPosts } from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
+import { PostType } from '../../index';
 
-export type PostType = {
-  id: number;
-  message: string;
-  likesCount: number;
-};
+type ProfilePropsType = {
+  posts: PostType[]
+}
 
-export const Profile = () => {
-  const posts = [
-    { id: 1, message: "Hi, how are your?", likesCount: 12 },
-    { id: 2, message: "It's my first post", likesCount: 5 },
-    { id: 3, message: "Cat!", likesCount: 5 },
-  ];
-
+export const Profile = (props: ProfilePropsType) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts posts={posts} />
+      <MyPosts posts={props.posts} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import style from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { PostType } from '../Profile';
+import { PostType } from '../../../index';
 
 type MyPostsPropsType = {
   posts: Array<PostType>;
@@ -8,7 +8,7 @@ type MyPostsPropsType = {
 
 export const MyPosts = (props: MyPostsPropsType) => {
   const postsElements = props.posts
-    .map((post) => <Post message={post.message} likesCount={post.likesCount}/>)
+    .map((post) => <Post message={post.message} likesCount={post.likesCount} key={post.id}/>)
 
   return (
     <div className={style['posts-box']}>
