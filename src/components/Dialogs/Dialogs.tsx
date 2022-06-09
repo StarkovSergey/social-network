@@ -37,26 +37,25 @@ export const Dialogs = () => {
     { id: 6, name: "Viktoria" },
   ];
 
-  const messagesData = [
+  const messages = [
     { id: 1, massage: "Hi" },
     { id: 2, massage: "How is your morris?" },
     { id: 3, massage: "Любо!" },
   ];
 
+  const dialogsElements = dialogsData
+    .map((dialog) => <DialogItem name={dialog.name} id={dialog.id} />)
+
+  const messagesElements = messages
+    .map((message) => <Message message={message.massage} />)
+
   return (
     <div className={style.dialogs}>
       <ul className={style["dialogs-list"]}>
-        <DialogItem name={dialogsData[0].name} id={dialogsData[0].id} />
-        <DialogItem name={dialogsData[1].name} id={dialogsData[1].id} />
-        <DialogItem name={dialogsData[2].name} id={dialogsData[2].id} />
-        <DialogItem name={dialogsData[3].name} id={dialogsData[3].id} />
-        <DialogItem name={dialogsData[4].name} id={dialogsData[4].id} />
-        <DialogItem name={dialogsData[5].name} id={dialogsData[5].id} />
+        {dialogsElements}
       </ul>
       <ul className={style["messages-list"]}>
-        <Message message={messagesData[0].massage} />
-        <Message message={messagesData[1].massage} />
-        <Message message={messagesData[2].massage} />
+        {messagesElements}
       </ul>
     </div>
   );

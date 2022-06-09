@@ -9,7 +9,7 @@ export const Post = ({message, likesCount}: PostPropsType) => {
   return (
     <div className={style.item}>
       <img src="//unsplash.it/50/50" alt="avatar"/>
-      <p>{message}!!!</p>
+      <p>{message}</p>
       <span>like </span>{likesCount}
     </div>
   );
