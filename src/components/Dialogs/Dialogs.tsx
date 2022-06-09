@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 type DialogItemPropsType = {
   name: string;
-  id: string;
+  id: number;
 };
 
 type MessagePropsType = {
@@ -27,20 +27,36 @@ const Message = (props: MessagePropsType) => {
 };
 
 export const Dialogs = () => {
+
+  const dialogsData = [
+    { id: 1, name: "Brendan" },
+    { id: 2, name: "Milada" },
+    { id: 3, name: "Vera" },
+    { id: 4, name: "Vita" },
+    { id: 5, name: "Maks" },
+    { id: 6, name: "Viktoria" },
+  ];
+
+  const messagesData = [
+    { id: 1, massage: "Hi" },
+    { id: 2, massage: "How is your morris?" },
+    { id: 3, massage: "Любо!" },
+  ];
+
   return (
     <div className={style.dialogs}>
       <ul className={style["dialogs-list"]}>
-        <DialogItem name="Brendan" id="1" />
-        <DialogItem name="Milada" id="2" />
-        <DialogItem name="Vera" id="3" />
-        <DialogItem name="Vita" id="4" />
-        <DialogItem name="Maks" id="5" />
-        <DialogItem name="Viktoria" id="6" />
+        <DialogItem name={dialogsData[0].name} id={dialogsData[0].id} />
+        <DialogItem name={dialogsData[1].name} id={dialogsData[1].id} />
+        <DialogItem name={dialogsData[2].name} id={dialogsData[2].id} />
+        <DialogItem name={dialogsData[3].name} id={dialogsData[3].id} />
+        <DialogItem name={dialogsData[4].name} id={dialogsData[4].id} />
+        <DialogItem name={dialogsData[5].name} id={dialogsData[5].id} />
       </ul>
       <ul className={style["messages-list"]}>
-        <Message message="Hi" />
-        <Message message="How is your morris?" />
-        <Message message="Любо!" />
+        <Message message={messagesData[0].massage} />
+        <Message message={messagesData[1].massage} />
+        <Message message={messagesData[2].massage} />
       </ul>
     </div>
   );
