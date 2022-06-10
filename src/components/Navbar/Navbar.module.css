@@ -6,6 +6,7 @@
 
 .nav ul {
   margin: 0;
+  margin-bottom: 30px;
   padding: 0;
   list-style: none;
 }
@@ -17,4 +18,28 @@
 
 a.active {
   text-decoration: underline;
+}
+
+.sidebar-title {
+  margin: 0;
+  margin-bottom: 15px;
+  color: white;
+  font-weight: 500;
+}
+
+.friends-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.friends-list li {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
 }

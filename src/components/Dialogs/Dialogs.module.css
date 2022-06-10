@@ -1,6 +1,6 @@
 .dialogs {
   display: grid;
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: 3fr 10fr;
   padding: 10px;
 }
 
@@ -11,7 +11,13 @@
 }
 
 .dialog {
+  margin-bottom: 20px;
+}
 
+.dialog-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 a.active {
