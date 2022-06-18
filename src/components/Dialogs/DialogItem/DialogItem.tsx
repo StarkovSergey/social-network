@@ -1,5 +1,6 @@
 import style from "./../Dialogs.module.css";
 import { NavLink } from "react-router-dom";
+import React from 'react';
 
 type DialogItemPropsType = {
   name: string;
@@ -7,7 +8,7 @@ type DialogItemPropsType = {
   avatar: string;
 };
 
-export const DialogItem = (props: DialogItemPropsType) => {
+export const DialogItem: React.FC<DialogItemPropsType> = (props) => {
   const path = `/dialogs/${props.id}`;
 
   return (

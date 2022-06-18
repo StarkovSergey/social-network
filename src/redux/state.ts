@@ -1,23 +1,21 @@
-import exp from 'constants';
+import { rerenderEntireTree } from '../render';
 
 export type StateType = {
   profilePage: ProfilePageType;
-  dialogsPage: MessagesPageType;
+  dialogsPage: DialogsPageType;
   sidebarPage: SidebarPageType;
 };
 
 export type ProfilePageType = {
   posts: Array<PostType>;
 };
-
-export type MessagesPageType = {
+export type DialogsPageType = {
   messages: Array<MessageType>;
   dialogs: Array<DialogType>;
 };
-
 export type SidebarPageType = {
   friends: Array<DialogType>;
-}
+};
 
 export type PostType = {
   id: number;
@@ -33,7 +31,6 @@ export type MessageType = {
   id: number;
   message: string;
 };
-
 
 export const state: StateType = {
   profilePage: {
@@ -63,6 +60,17 @@ export const state: StateType = {
       { id: 1, name: 'Reyn', avatar: '//unsplash.it/52/50' },
       { id: 4, name: 'Dimon', avatar: '//unsplash.it/48/50' },
       { id: 2, name: 'Formen', avatar: '//unsplash.it/51/52' },
-    ]
-  }
+    ],
+  },
+};
+
+export const addPost = (postMessage: string): void => {
+  const newPost: PostType = {
+    id: new Date().getTime(),
+    message: postMessage,
+    likesCount: 0,
+  };
+
+  state.profilePage.posts.push(newPost);
+  rerenderEntireTree(state);
 };
