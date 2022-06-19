@@ -8,10 +8,12 @@ export type StateType = {
 
 export type ProfilePageType = {
   posts: Array<PostType>;
+  newPostText: string;
 };
 export type DialogsPageType = {
   messages: Array<MessageType>;
   dialogs: Array<DialogType>;
+  newMessageText: string;
 };
 export type SidebarPageType = {
   friends: Array<DialogType>;
@@ -39,6 +41,7 @@ export const state: StateType = {
       { id: 2, message: "It's my first post", likesCount: 5 },
       { id: 3, message: 'Cat!', likesCount: 5 },
     ],
+    newPostText: '',
   },
   dialogsPage: {
     dialogs: [
@@ -54,6 +57,7 @@ export const state: StateType = {
       { id: 2, message: 'How is your morris?' },
       { id: 3, message: 'Любо!' },
     ],
+    newMessageText: '',
   },
   sidebarPage: {
     friends: [
@@ -64,13 +68,24 @@ export const state: StateType = {
   },
 };
 
-export const addPost = (postMessage: string): void => {
+export const updateNewPostText = (text: string): void => {
+  state.profilePage.newPostText = text;
+  rerenderEntireTree(state);
+};
+
+export const updateNewMessageText = (text: string): void => {
+  state.dialogsPage.newMessageText = text;
+  rerenderEntireTree(state);
+}
+
+export const addPost = (): void => {
   const newPost: PostType = {
     id: new Date().getTime(),
-    message: postMessage,
+    message: state.profilePage.newPostText,
     likesCount: 0,
   };
 
   state.profilePage.posts.push(newPost);
+  state.profilePage.newPostText = '';
   rerenderEntireTree(state);
 };

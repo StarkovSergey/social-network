@@ -2,10 +2,11 @@ import style from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
 import { DialogType, DialogsPageType, MessageType } from '../../redux/state';
-import React, { LegacyRef } from 'react';
+import React, { ChangeEvent, LegacyRef } from 'react';
 
 type DialogsPropsType = {
   state: DialogsPageType;
+  newMessageChangeHandler: (text: string) => void;
 };
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -23,12 +24,21 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     console.log(newMessageText);
   };
 
+  const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    props.newMessageChangeHandler(evt.currentTarget.value)
+  }
+
   return (
     <div className={style.dialogs}>
       <ul className={style['dialogs-list']}>{dialogsElements}</ul>
       <ul className={style['messages-list']}>{messagesElements}</ul>
       <div className="new-message">
-        <textarea className="new-message__textarea" ref={newMessageTextareaElement}></textarea>
+        <textarea
+          value={props.state.newMessageText}
+          className="new-message__textarea"
+          ref={newMessageTextareaElement}
+          onChange={textareaChangeHandler}
+        ></textarea>
         <button className="new-message__add-button" onClick={addMessage}>
           Add message
         </button>

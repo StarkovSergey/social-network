@@ -1,11 +1,13 @@
 import style from './MyPosts.module.css';
 import { Post } from './Post/Post';
 import { PostType } from '../../../redux/state';
-import React, { LegacyRef } from 'react';
+import React, { ChangeEvent } from 'react';
 
 type MyPostsPropsType = {
   posts: Array<PostType>;
-  addPost: (message: string) => void;
+  addPost: () => void;
+  newPostText: string;
+  updateNewPostText: (text: string) => void;
 };
 
 export const MyPosts = (props: MyPostsPropsType) => {
@@ -13,14 +15,14 @@ export const MyPosts = (props: MyPostsPropsType) => {
     <Post message={post.message} likesCount={post.likesCount} key={post.id} />
   ));
 
-  const newPostElement = React.createRef<HTMLTextAreaElement>(); // создать ссылку
-
   const addPost = () => {
-    if (newPostElement.current) {
-      const text: string = newPostElement.current.value;
-      props.addPost(text);
-      newPostElement.current.value = '';
+    if (props.newPostText) {
+      props.addPost();
     }
+  };
+
+  const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateNewPostText(evt.currentTarget.value);
   };
 
   return (
@@ -28,7 +30,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
       <h3>my posts</h3>
       <div>
         <div>
-          <textarea ref={newPostElement} id={'new-post'}></textarea>
+          <textarea value={props.newPostText} id={'new-post'} onChange={textareaChangeHandler} />
         </div>
         <button onClick={addPost}>Add post</button>
       </div>
