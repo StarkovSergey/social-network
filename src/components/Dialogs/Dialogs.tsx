@@ -1,12 +1,12 @@
 import style from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import { DialogType, DialogsPageType, MessageType } from '../../redux/state';
+import { DialogsPageType, ActionsTypes } from '../../redux/state';
 import React, { ChangeEvent, LegacyRef } from 'react';
 
 type DialogsPropsType = {
   state: DialogsPageType;
-  newMessageChangeHandler: (text: string) => void;
+  dispatch: (action: ActionsTypes) => void;
 };
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -25,7 +25,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   };
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    props.newMessageChangeHandler(evt.currentTarget.value)
+    props.dispatch({ type: 'UPDATE-NEW-MESSAGE-TEXT', text: evt.currentTarget.value})
   }
 
   return (

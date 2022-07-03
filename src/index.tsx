@@ -9,15 +9,13 @@ const rerenderEntireTree = (state: StateType) => {
   ReactDOM.render(
     <BrowserRouter>
       <App
-        state={store._state}
-        addPost={store.addPost.bind(store)}
-        textareaChangeHandler={store.updateNewPostText.bind(store)}
-        newMessageChangeHandler={store.updateNewMessageText.bind(store)}
+        state={store.state}
+        dispatch={store.dispatch.bind(store)}
       />
     </BrowserRouter>,
     document.getElementById('root')
   );
 };
 
-rerenderEntireTree(store._state);
+rerenderEntireTree(store.state);
 store.subscribe(rerenderEntireTree);

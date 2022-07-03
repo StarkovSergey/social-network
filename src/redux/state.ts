@@ -32,14 +32,26 @@ export type MessageType = {
   message: string;
 };
 
+type AddPostActionType = {
+  type: 'ADD-POST';
+}
+type UpdateNewPostTextType = {
+  type: 'UPDATE-NEW-POST-TEXT';
+  text: string;
+}
+type UpdateNewMessageTextType = {
+  type: 'UPDATE-NEW-MESSAGE-TEXT';
+  text: string;
+}
+
+export type ActionsTypes = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageTextType;
+
 export type StoreType = {
   _state: StateType;
   state: StateType;
-  updateNewPostText: (text: string) => void;
-  addPost: () => void;
-  updateNewMessageText: (text: string) => void;
   subscribe: (observer: (state: StateType) => void) => void;
   _callSubscriber: (state: StateType) => void;
+  dispatch: (action: ActionsTypes) => void;
 };
 
 export const store: StoreType = {
@@ -76,33 +88,33 @@ export const store: StoreType = {
       ],
     },
   },
-  get state() {
-    return this._state;
-  },
   _callSubscriber(state: StateType) {
     console.log('State changed');
+  },
+  get state() {
+    return this._state;
   },
   subscribe(observer: (state: StateType) => void) {
     this._callSubscriber = observer;
   },
-  updateNewPostText(text: string) {
-    console.log(this);
-    this._state.profilePage.newPostText = text;
-    this._callSubscriber(this._state);
-  },
-  addPost() {
-    const newPost: PostType = {
-      id: new Date().getTime(),
-      message: this._state.profilePage.newPostText,
-      likesCount: 0,
-    };
+  dispatch(action) { // action - объект, который описывает действие
+    if (action.type === 'ADD-POST') {
+      const newPost: PostType = {
+        id: new Date().getTime(),
+        message: this._state.profilePage.newPostText,
+        likesCount: 0,
+      };
+      this._state.profilePage.posts.push(newPost);
+      this._state.profilePage.newPostText = '';
+      this._callSubscriber(this._state);
 
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.newPostText = '';
-    this._callSubscriber(this._state);
-  },
-  updateNewMessageText(text: string) {
-    this._state.dialogsPage.newMessageText = text;
-    this._callSubscriber(this._state);
-  },
+    } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+      this._state.profilePage.newPostText = action.text;
+      this._callSubscriber(this._state);
+
+    } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+      this._state.dialogsPage.newMessageText = action.text;
+      this._callSubscriber(this._state);
+    }
+  }
 };

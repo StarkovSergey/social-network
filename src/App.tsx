@@ -8,13 +8,11 @@ import { Route } from 'react-router-dom';
 import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
-import { StateType } from './redux/state';
+import { ActionsTypes, StateType } from './redux/state';
 
 type AppPropsType = {
   state: StateType;
-  addPost: () => void;
-  textareaChangeHandler: (text: string) => void;
-  newMessageChangeHandler: (text: string) => void;
+  dispatch: (action: ActionsTypes) => void;
 };
 
 const App = (props: AppPropsType) => {
@@ -25,15 +23,14 @@ const App = (props: AppPropsType) => {
       <main className="app-wrapper-content">
         <Route path="/dialogs" render={() => <Dialogs
           state={props.state.dialogsPage}
-          newMessageChangeHandler={props.newMessageChangeHandler}
+          dispatch={props.dispatch}
         />} />
         <Route
           path="/profile"
           render={() => (
             <Profile
               state={props.state.profilePage}
-              addPost={props.addPost}
-              updateNewPostText={props.textareaChangeHandler}
+              dispatch={props.dispatch}
               newPostText={props.state.profilePage.newPostText}
             />
           )}
