@@ -1,6 +1,6 @@
 import style from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { ActionsTypes, PostType } from '../../../redux/state';
+import { ActionsTypes, addPostActionCreator, PostType, updateNewPostTextActionCreator } from '../../../redux/state';
 import React, { ChangeEvent } from 'react';
 
 type MyPostsPropsType = {
@@ -9,6 +9,7 @@ type MyPostsPropsType = {
   dispatch: (action: ActionsTypes) => void;
 };
 
+
 export const MyPosts = (props: MyPostsPropsType) => {
   const postsElements = props.posts.map((post) => (
     <Post message={post.message} likesCount={post.likesCount} key={post.id} />
@@ -16,12 +17,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
   const addPost = () => {
     if (props.newPostText) {
-      props.dispatch({ type: 'ADD-POST' });
+      props.dispatch(addPostActionCreator());
     }
   };
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch({ type: 'UPDATE-NEW-POST-TEXT', text: evt.currentTarget.value})
+    props.dispatch(updateNewPostTextActionCreator(evt.currentTarget.value));
   };
 
   return (

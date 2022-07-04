@@ -32,19 +32,16 @@ export type MessageType = {
   message: string;
 };
 
-type AddPostActionType = {
-  type: 'ADD-POST';
-}
-type UpdateNewPostTextType = {
-  type: 'UPDATE-NEW-POST-TEXT';
-  text: string;
-}
-type UpdateNewMessageTextType = {
-  type: 'UPDATE-NEW-MESSAGE-TEXT';
-  text: string;
-}
+export type ActionsTypes =
+  | ReturnType<typeof addPostActionCreator>
+  | ReturnType<typeof updateNewPostTextActionCreator>
+  | ReturnType<typeof updateNewMessageTextActionCreator>;
 
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageTextType;
+export enum ActionType {
+  ADD_POST = 'ADD-POST',
+  UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT',
+  UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT',
+}
 
 export type StoreType = {
   _state: StateType;
@@ -97,7 +94,8 @@ export const store: StoreType = {
   subscribe(observer: (state: StateType) => void) {
     this._callSubscriber = observer;
   },
-  dispatch(action) { // action - объект, который описывает действие
+  dispatch(action) {
+    // action - объект, который описывает действие
     if (action.type === 'ADD-POST') {
       const newPost: PostType = {
         id: new Date().getTime(),
@@ -107,14 +105,30 @@ export const store: StoreType = {
       this._state.profilePage.posts.push(newPost);
       this._state.profilePage.newPostText = '';
       this._callSubscriber(this._state);
-
     } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
       this._state.profilePage.newPostText = action.text;
       this._callSubscriber(this._state);
-
     } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
       this._state.dialogsPage.newMessageText = action.text;
       this._callSubscriber(this._state);
     }
-  }
+  },
 };
+
+// это вспомогательная функция, а не часть бизнес-логику. Её можно не отправлять через пропсы, а просто импортировать
+export const addPostActionCreator = () =>
+  ({
+    type: ActionType.ADD_POST,
+  } as const);
+
+export const updateNewPostTextActionCreator = (text: string) =>
+  ({
+    type: ActionType.UPDATE_NEW_POST_TEXT,
+    text,
+  } as const);
+
+export const updateNewMessageTextActionCreator = (text: string) =>
+  ({
+    type: ActionType.UPDATE_NEW_MESSAGE_TEXT,
+    text,
+  } as const);

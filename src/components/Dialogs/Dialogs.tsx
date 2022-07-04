@@ -1,7 +1,7 @@
 import style from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import { DialogsPageType, ActionsTypes } from '../../redux/state';
+import { DialogsPageType, ActionsTypes, updateNewMessageTextActionCreator } from '../../redux/state';
 import React, { ChangeEvent, LegacyRef } from 'react';
 
 type DialogsPropsType = {
@@ -25,8 +25,9 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   };
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch({ type: 'UPDATE-NEW-MESSAGE-TEXT', text: evt.currentTarget.value})
-  }
+    props.dispatch(updateNewMessageTextActionCreator(evt.currentTarget.value))
+  };
+
 
   return (
     <div className={style.dialogs}>
@@ -37,8 +38,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
           value={props.state.newMessageText}
           className="new-message__textarea"
           ref={newMessageTextareaElement}
-          onChange={textareaChangeHandler}
-        ></textarea>
+          onChange={textareaChangeHandler}></textarea>
         <button className="new-message__add-button" onClick={addMessage}>
           Add message
         </button>
