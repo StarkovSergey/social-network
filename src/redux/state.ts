@@ -1,3 +1,6 @@
+import { actionTypes } from 'redux-form';
+import exp from 'constants';
+
 export type StateType = {
   profilePage: ProfilePageType;
   dialogsPage: DialogsPageType;
@@ -35,12 +38,14 @@ export type MessageType = {
 export type ActionsTypes =
   | ReturnType<typeof addPostActionCreator>
   | ReturnType<typeof updateNewPostTextActionCreator>
-  | ReturnType<typeof updateNewMessageTextActionCreator>;
+  | ReturnType<typeof updateNewMessageTextActionCreator>
+  | ReturnType<typeof addMessageActionCreator>;
 
 export enum ActionType {
   ADD_POST = 'ADD-POST',
   UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT',
   UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT',
+  ADD_MESSAGE = 'ADD-MESSAGE',
 }
 
 export type StoreType = {
@@ -94,23 +99,38 @@ export const store: StoreType = {
   subscribe(observer: (state: StateType) => void) {
     this._callSubscriber = observer;
   },
-  dispatch(action) {
+  dispatch(action: ActionsTypes) {
     // action - объект, который описывает действие
-    if (action.type === 'ADD-POST') {
-      const newPost: PostType = {
-        id: new Date().getTime(),
-        message: this._state.profilePage.newPostText,
-        likesCount: 0,
-      };
-      this._state.profilePage.posts.push(newPost);
-      this._state.profilePage.newPostText = '';
-      this._callSubscriber(this._state);
-    } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-      this._state.profilePage.newPostText = action.text;
-      this._callSubscriber(this._state);
-    } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-      this._state.dialogsPage.newMessageText = action.text;
-      this._callSubscriber(this._state);
+    switch (action.type) {
+      case ActionType.ADD_POST:
+        const newPost: PostType = {
+          id: new Date().getTime(),
+          message: this._state.profilePage.newPostText,
+          likesCount: 0,
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = '';
+        this._callSubscriber(this._state);
+        break;
+      case ActionType.UPDATE_NEW_POST_TEXT:
+        this._state.profilePage.newPostText = action.text;
+        this._callSubscriber(this._state);
+        break;
+      case ActionType.UPDATE_NEW_MESSAGE_TEXT:
+        this._state.dialogsPage.newMessageText = action.text;
+        this._callSubscriber(this._state);
+        break;
+      case ActionType.ADD_MESSAGE:
+        const newMessage: MessageType = {
+          id: new Date().getTime(),
+          message: this._state.dialogsPage.newMessageText,
+        };
+        this._state.dialogsPage.messages.push(newMessage);
+        this._state.dialogsPage.newMessageText = '';
+        this._callSubscriber(this._state);
+        break;
+      default:
+        throw new Error('unidentified action')
     }
   },
 };
@@ -131,4 +151,9 @@ export const updateNewMessageTextActionCreator = (text: string) =>
   ({
     type: ActionType.UPDATE_NEW_MESSAGE_TEXT,
     text,
+  } as const);
+
+export const addMessageActionCreator = () =>
+  ({
+    type: ActionType.ADD_MESSAGE,
   } as const);
