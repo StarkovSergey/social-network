@@ -1,5 +1,6 @@
-import { actionTypes } from 'redux-form';
-import exp from 'constants';
+import { addPostActionCreator, profileReducer, updateNewPostTextActionCreator } from './profile-reducer';
+import { addMessageActionCreator, dialogsReducer, updateNewMessageTextActionCreator } from './dialogs-reducer';
+import { sidebarReducer } from './sidebar-reducer';
 
 export type StateType = {
   profilePage: ProfilePageType;
@@ -100,60 +101,10 @@ export const store: StoreType = {
     this._callSubscriber = observer;
   },
   dispatch(action: ActionsTypes) {
-    // action - объект, который описывает действие
-    switch (action.type) {
-      case ActionType.ADD_POST:
-        const newPost: PostType = {
-          id: new Date().getTime(),
-          message: this._state.profilePage.newPostText,
-          likesCount: 0,
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
-        break;
-      case ActionType.UPDATE_NEW_POST_TEXT:
-        this._state.profilePage.newPostText = action.text;
-        this._callSubscriber(this._state);
-        break;
-      case ActionType.UPDATE_NEW_MESSAGE_TEXT:
-        this._state.dialogsPage.newMessageText = action.text;
-        this._callSubscriber(this._state);
-        break;
-      case ActionType.ADD_MESSAGE:
-        const newMessage: MessageType = {
-          id: new Date().getTime(),
-          message: this._state.dialogsPage.newMessageText,
-        };
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = '';
-        this._callSubscriber(this._state);
-        break;
-      default:
-        throw new Error('unidentified action')
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+    this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action);
+
+    this._callSubscriber(this._state);
   },
 };
-
-// это вспомогательная функция, а не часть бизнес-логику. Её можно не отправлять через пропсы, а просто импортировать
-export const addPostActionCreator = () =>
-  ({
-    type: ActionType.ADD_POST,
-  } as const);
-
-export const updateNewPostTextActionCreator = (text: string) =>
-  ({
-    type: ActionType.UPDATE_NEW_POST_TEXT,
-    text,
-  } as const);
-
-export const updateNewMessageTextActionCreator = (text: string) =>
-  ({
-    type: ActionType.UPDATE_NEW_MESSAGE_TEXT,
-    text,
-  } as const);
-
-export const addMessageActionCreator = () =>
-  ({
-    type: ActionType.ADD_MESSAGE,
-  } as const);

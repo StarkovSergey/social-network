@@ -3,11 +3,10 @@ import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
 import {
   DialogsPageType,
-  ActionsTypes,
-  updateNewMessageTextActionCreator,
-  addMessageActionCreator, StoreType, StateType,
+  ActionsTypes, StoreType, StateType,
 } from '../../redux/state';
 import React, { ChangeEvent } from 'react';
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/dialogs-reducer';
 
 type DialogsPropsType = {
   store: StoreType;
