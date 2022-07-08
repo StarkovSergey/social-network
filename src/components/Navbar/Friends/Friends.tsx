@@ -1,6 +1,6 @@
 import React from 'react';
 import style from '../Navbar.module.css';
-import { DialogType } from '../../../redux/state';
+import { DialogType } from '../../../redux/store';
 
 type FriendsPropsType = {
   friends: Array<DialogType>

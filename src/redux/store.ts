@@ -51,7 +51,7 @@ export enum ActionType {
 
 export type StoreType = {
   _state: StateType;
-  state: StateType;
+  getState: () => StateType;
   subscribe: (observer: (state: StateType) => void) => void;
   _callSubscriber: (state: StateType) => void;
   dispatch: (action: ActionsTypes) => void;
@@ -94,7 +94,7 @@ export const store: StoreType = {
   _callSubscriber(state: StateType) {
     console.log('State changed');
   },
-  get state() {
+  getState() {
     return this._state;
   },
   subscribe(observer: (state: StateType) => void) {
