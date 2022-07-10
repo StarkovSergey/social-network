@@ -1,34 +1,32 @@
 import style from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import {
-  DialogsPageType,
-  ActionsTypes, StoreType, StateType,
-} from '../../redux/store';
 import React, { ChangeEvent } from 'react';
-import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/dialogs-reducer';
+import { DialogType, MessageType } from '../../redux/dialogs-reducer';
 
 type DialogsPropsType = {
-  store: StoreType;
+  dialogs: DialogType[];
+  messages: MessageType[];
+  newMessageText: string;
+  addMessage: () => void;
+  updateNewMessageText: (text: string) => void;
 };
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
-  const state = props.store.getState().dialogsPage;
-
-  const dialogsElements = state.dialogs.map((dialog) => (
+  const dialogsElements = props.dialogs.map((dialog: any) => (
     <DialogItem name={dialog.name} id={dialog.id} avatar={dialog.avatar} key={dialog.id} />
   ));
 
-  const messagesElements = state.messages.map((message) => (
+  const messagesElements = props.messages.map((message: any) => (
     <Message message={message.message} key={message.id} />
   ));
 
   const addMessage = () => {
-    props.store.dispatch(addMessageActionCreator());
+    props.addMessage()
   };
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    props.store.dispatch(updateNewMessageTextActionCreator(evt.currentTarget.value));
+    props.updateNewMessageText(evt.currentTarget.value);
   };
 
   return (
@@ -37,7 +35,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
       <ul className={style['messages-list']}>{messagesElements}</ul>
       <div className="new-message">
         <textarea
-          value={state.newMessageText}
+          value={props.newMessageText}
           className="new-message__textarea"
           placeholder="Enter your message..."
           onChange={textareaChangeHandler}></textarea>

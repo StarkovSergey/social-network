@@ -7,9 +7,9 @@ import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../r
 type MyPostsPropsType = {
   posts: Array<PostType>;
   newPostText: string;
-  dispatch: (action: ActionsTypes) => void;
+  updateNewPostText: (text: string) => void;
+  addPost: () => void;
 };
-
 
 export const MyPosts = (props: MyPostsPropsType) => {
   const postsElements = props.posts.map((post) => (
@@ -18,12 +18,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
   const addPost = () => {
     if (props.newPostText) {
-      props.dispatch(addPostActionCreator());
+      props.addPost();
     }
   };
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(updateNewPostTextActionCreator(evt.currentTarget.value));
+    props.updateNewPostText(evt.currentTarget.value);
   };
 
   return (

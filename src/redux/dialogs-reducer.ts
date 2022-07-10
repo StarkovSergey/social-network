@@ -1,6 +1,21 @@
-import { ActionsTypes, ActionType, DialogsPageType, MessageType } from './store';
+import { ActionsTypes, ActionType } from './store';
 
-const initialState = {
+export type DialogsPageType = {
+  messages: Array<MessageType>;
+  dialogs: Array<DialogType>;
+  newMessageText: string;
+};
+export type DialogType = {
+  id: number;
+  name: string;
+  avatar: string;
+};
+export type MessageType = {
+  id: number;
+  message: string;
+};
+
+const initialState: DialogsPageType = {
   dialogs: [
     { id: 1, name: 'Brendan', avatar: '//unsplash.it/50/50' },
     { id: 2, name: 'Milada', avatar: '//unsplash.it/51/50' },
