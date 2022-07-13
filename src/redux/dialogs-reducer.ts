@@ -1,10 +1,11 @@
 import { ActionsTypes, ActionType } from './store';
 
-export type DialogsPageType = {
-  messages: Array<MessageType>;
-  dialogs: Array<DialogType>;
-  newMessageText: string;
-};
+// export type DialogsPageType = {
+//   messages: Array<MessageType>;
+//   dialogs: Array<DialogType>;
+//   newMessageText: string;
+// };
+
 export type DialogType = {
   id: number;
   name: string;
@@ -15,7 +16,9 @@ export type MessageType = {
   message: string;
 };
 
-const initialState: DialogsPageType = {
+export type DialogsPageType = typeof initialState
+
+const initialState = {
   dialogs: [
     { id: 1, name: 'Brendan', avatar: '//unsplash.it/50/50' },
     { id: 2, name: 'Milada', avatar: '//unsplash.it/51/50' },
@@ -23,16 +26,16 @@ const initialState: DialogsPageType = {
     { id: 4, name: 'Vita', avatar: '//unsplash.it/49/50' },
     { id: 5, name: 'Maks', avatar: '//unsplash.it/50/49' },
     { id: 6, name: 'Viktoria', avatar: '//unsplash.it/51/51' },
-  ],
+  ] as Array<DialogType>,
   messages: [
     { id: 1, message: 'Hi' },
     { id: 2, message: 'How is your morris?' },
     { id: 3, message: 'Любо!' },
-  ],
+  ] as Array<MessageType>,
   newMessageText: '',
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
   switch (action.type) {
     case ActionType.UPDATE_NEW_MESSAGE_TEXT:
       state.newMessageText = action.text;
@@ -51,9 +54,6 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
 
   return state;
 };
-
-
-// Это вспомогательная функция, а не часть бизнес-логику. Её можно не отправлять через пропсы, а просто импортировать
 
 export const updateNewMessageTextActionCreator = (text: string) =>
   ({

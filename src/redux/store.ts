@@ -2,38 +2,20 @@ import { addPostActionCreator, profileReducer, updateNewPostTextActionCreator } 
 import { addMessageActionCreator, dialogsReducer, updateNewMessageTextActionCreator } from './dialogs-reducer';
 import { sidebarReducer } from './sidebar-reducer';
 
-export type StateType = {
-  profilePage: ProfilePageType;
-  dialogsPage: DialogsPageType;
-  sidebarPage: SidebarPageType;
-};
 
-export type ProfilePageType = {
-  posts: Array<PostType>;
-  newPostText: string;
-};
-export type DialogsPageType = {
-  messages: Array<MessageType>;
-  dialogs: Array<DialogType>;
-  newMessageText: string;
-};
 export type SidebarPageType = {
   friends: Array<DialogType>;
 };
 
-export type PostType = {
-  id: number;
-  message: string;
-  likesCount: number;
-};
+// export type PostType = {
+//   id: number;
+//   message: string;
+//   likesCount: number;
+// };
 export type DialogType = {
   id: number;
   name: string;
   avatar: string;
-};
-export type MessageType = {
-  id: number;
-  message: string;
 };
 
 export type ActionsTypes =
@@ -49,13 +31,6 @@ export enum ActionType {
   ADD_MESSAGE = 'ADD-MESSAGE',
 }
 
-export type StoreType = {
-  _state: StateType;
-  getState: () => StateType;
-  subscribe: (observer: (state: StateType) => void) => void;
-  _callSubscriber: (state: StateType) => void;
-  dispatch: (action: ActionsTypes) => void;
-};
 
 // export const store: StoreType = {
 //   _state: {

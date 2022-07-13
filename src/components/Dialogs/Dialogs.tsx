@@ -3,14 +3,7 @@ import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
 import React, { ChangeEvent } from 'react';
 import { DialogType, MessageType } from '../../redux/dialogs-reducer';
-
-type DialogsPropsType = {
-  dialogs: DialogType[];
-  messages: MessageType[];
-  newMessageText: string;
-  addMessage: () => void;
-  updateNewMessageText: (text: string) => void;
-};
+import { DialogsPropsType } from './DialogsContainer'
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const dialogsElements = props.dialogs.map((dialog: any) => (

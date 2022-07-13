@@ -2,12 +2,15 @@ import style from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { SidebarPageType } from '../../redux/store';
 import { Friends } from './Friends/Friends';
+import { FriendsContainer } from './Friends/FriendsContainer'
 
-type NavbarPropsType = {
-  state: SidebarPageType;
-}
+// TODO: вернуть друзей!!!
 
-export const Navbar = (props: NavbarPropsType) => {
+// type NavbarPropsType = {
+//   state: SidebarPageType;
+// }
+// export const Navbar = (props: NavbarPropsType) => {
+export const Navbar = () => {
 
   return (
     <nav className={style.nav}>
@@ -38,7 +41,8 @@ export const Navbar = (props: NavbarPropsType) => {
           </NavLink>
         </li>
       </ul>
-      <Friends friends={props.state.friends}/>
+
+      <FriendsContainer />
     </nav>
   );
 };

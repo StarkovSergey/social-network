@@ -1,10 +1,7 @@
 import React from 'react';
 import style from '../Navbar.module.css';
-import { DialogType } from '../../../redux/store';
+import { FriendsPropsType } from './FriendsContainer'
 
-type FriendsPropsType = {
-  friends: Array<DialogType>
-}
 
 export const Friends = (props: FriendsPropsType) => {
   const friendsElements = props.friends.map((friend) => {
