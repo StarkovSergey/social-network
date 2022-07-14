@@ -1,22 +1,12 @@
 import { addPostActionCreator, profileReducer, updateNewPostTextActionCreator } from './profile-reducer';
 import { addMessageActionCreator, dialogsReducer, updateNewMessageTextActionCreator } from './dialogs-reducer';
-import { sidebarReducer } from './sidebar-reducer';
 
 
-export type SidebarPageType = {
-  friends: Array<DialogType>;
-};
-
-// export type PostType = {
+// export type DialogType = {
 //   id: number;
-//   message: string;
-//   likesCount: number;
+//   name: string;
+//   avatar: string;
 // };
-export type DialogType = {
-  id: number;
-  name: string;
-  avatar: string;
-};
 
 export type ActionsTypes =
   | ReturnType<typeof addPostActionCreator>

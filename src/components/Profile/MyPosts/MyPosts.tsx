@@ -5,7 +5,7 @@ import { MyPostsPropsType } from './MyPostsContainer'
 
 export const MyPosts = (props: MyPostsPropsType) => {
   const postsElements = props.posts.map((post) => (
-    <Post message={post.message} likesCount={post.likesCount} key={post.id} />
+    <Post message={post.message} likesCount={post.likesCount} key={post.id} id={post.id}/>
   ));
 
   const addPost = () => {

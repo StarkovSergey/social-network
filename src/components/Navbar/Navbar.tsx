@@ -1,15 +1,7 @@
 import style from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
-import { SidebarPageType } from '../../redux/store';
-import { Friends } from './Friends/Friends';
 import { FriendsContainer } from './Friends/FriendsContainer'
 
-// TODO: вернуть друзей!!!
-
-// type NavbarPropsType = {
-//   state: SidebarPageType;
-// }
-// export const Navbar = (props: NavbarPropsType) => {
 export const Navbar = () => {
 
   return (
