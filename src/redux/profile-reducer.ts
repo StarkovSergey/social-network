@@ -1,4 +1,8 @@
-import { ActionsTypes, ActionType } from './store'
+
+export type addPostAT = ReturnType<typeof addPostAC>
+export type updateNewPostTextAT = ReturnType<typeof updateNewPostTextAC>
+
+type ActionsType = addPostAT | updateNewPostTextAT
 
 export type PostType = {
   id: number
@@ -20,9 +24,9 @@ const initialState: ProfilePageType = {
   newPostText: '',
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsType): ProfilePageType => {
   switch (action.type) {
-    case ActionType.ADD_POST:
+    case 'ADD-POST':
       const newPost: PostType = {
         id: new Date().getTime(),
         message: state.newPostText,
@@ -37,7 +41,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         }
       }
       break
-    case ActionType.UPDATE_NEW_POST_TEXT:
+    case 'UPDATE-NEW-POST-TEXT':
       return { ...state, newPostText: action.text }
     default:
       return state
@@ -47,13 +51,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 }
 
 // это вспомогательная функция, а не часть бизнес-логику. Её можно не отправлять через пропсы, а просто импортировать
-export const addPostActionCreator = () =>
-  ({
-    type: ActionType.ADD_POST,
-  } as const)
+export const addPostAC = () => ({
+    type: 'ADD-POST' as const,
+  })
 
-export const updateNewPostTextActionCreator = (text: string) =>
-  ({
-    type: ActionType.UPDATE_NEW_POST_TEXT,
+export const updateNewPostTextAC = (text: string) => ({
+    type: 'UPDATE-NEW-POST-TEXT' as const,
     text,
   } as const)

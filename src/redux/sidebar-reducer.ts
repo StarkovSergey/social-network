@@ -1,5 +1,3 @@
-import { ActionsTypes } from './store';
-
 export type SidebarPageType = typeof initialState
 
 export type DialogType = {
@@ -7,6 +5,10 @@ export type DialogType = {
   name: string;
   avatar: string;
 };
+
+type ActionsType = {
+
+}
 
 const initialState = {
   friends: [
@@ -16,6 +18,6 @@ const initialState = {
   ] as DialogType[],
 };
 
-export const sidebarReducer = (state: SidebarPageType = initialState, action: ActionsTypes): SidebarPageType => {
+export const sidebarReducer = (state: SidebarPageType = initialState, action: ActionsType): SidebarPageType => {
   return state;
 };

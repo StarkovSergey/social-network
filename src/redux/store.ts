@@ -1,27 +1,3 @@
-import { addPostActionCreator, profileReducer, updateNewPostTextActionCreator } from './profile-reducer';
-import { addMessageActionCreator, dialogsReducer, updateNewMessageTextActionCreator } from './dialogs-reducer';
-
-
-// export type DialogType = {
-//   id: number;
-//   name: string;
-//   avatar: string;
-// };
-
-export type ActionsTypes =
-  | ReturnType<typeof addPostActionCreator>
-  | ReturnType<typeof updateNewPostTextActionCreator>
-  | ReturnType<typeof updateNewMessageTextActionCreator>
-  | ReturnType<typeof addMessageActionCreator>;
-
-export enum ActionType {
-  ADD_POST = 'ADD-POST',
-  UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT',
-  UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT',
-  ADD_MESSAGE = 'ADD-MESSAGE',
-}
-
-
 // export const store: StoreType = {
 //   _state: {
 //     profilePage: {

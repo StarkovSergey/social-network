@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  addMessageActionCreator,
+  addMessageAC,
   DialogsPageType,
-  updateNewMessageTextActionCreator,
+  updateNewMessageTextAC,
 } from '../../redux/dialogs-reducer';
 import { Dialogs } from './Dialogs';
 import { connect } from 'react-redux';
@@ -27,10 +27,10 @@ const mapStateToProps = (state: AppStateType): DialogsPageType => {
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsReturnType => {
   return {
     updateNewMessageText: (text: string) => {
-      dispatch(updateNewMessageTextActionCreator(text));
+      dispatch(updateNewMessageTextAC(text));
     },
     addMessage: () => {
-      dispatch(addMessageActionCreator());
+      dispatch(addMessageAC());
     },
   };
 };
