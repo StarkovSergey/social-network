@@ -8,12 +8,7 @@ import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
-
-// type AppPropsType = {
-//   state: StateType;
-//   dispatch: (action: ActionsTypes) => void;
-//   store: any;
-// };
+import { UsersContainer } from './components/Users/UsersContainer'
 
 const App = () => {
   return (
@@ -32,6 +27,7 @@ const App = () => {
         <Route path="/news" render={News} />
         <Route path="/music" render={Music} />
         <Route path="/settings" render={Settings} />
+        <Route path="/users" render={() => <UsersContainer/>} />
       </main>
     </div>
   );
