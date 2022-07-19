@@ -1,5 +1,3 @@
-import { v1 } from 'uuid'
-
 export type UsersPageType = typeof initialState
 
 export type UserType = {
@@ -34,32 +32,7 @@ export type SetUsersAT = {
 export type ActionsType = FollowUserAT | UnfollowUserAT | SetUsersAT
 
 const initialState = {
-  users: [
-    // {
-    //   id: v1(),
-    //   photoUrl: '//unsplash.it/50/50',
-    //   followed: false,
-    //   fullName: 'Brendan M',
-    //   status: 'I am a boss',
-    //   location: { city: 'SPb', country: 'Russia' },
-    // },
-    // {
-    //   id: v1(),
-    //   photoUrl: '//unsplash.it/50/51',
-    //   followed: true,
-    //   fullName: 'Milada M',
-    //   status: 'I am a boss too',
-    //   location: { city: 'Hobbiton', country: 'Shire' },
-    // },
-    // {
-    //   id: v1(),
-    //   photoUrl: '//unsplash.it/50/49',
-    //   followed: false,
-    //   fullName: 'Vera M',
-    //   status: 'I am a boss too',
-    //   location: { city: 'Minas-Tirith', country: 'Gondor' },
-    // },
-  ] as UserType[],
+  users: [] as UserType[],
 }
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsType): UsersPageType => {
@@ -84,6 +57,6 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
   }
 }
 
-export const FollowUserAC = (id: string): FollowUserAT => ({ type: 'FOLLOW', id })
-export const UnfollowUserAC = (id: string): UnfollowUserAT => ({ type: 'UNFOLLOW', id })
-export const SetUsersAC = (users: UserType[]): SetUsersAT => ({type: 'SET-USERS', users})
+export const followUserAC = (id: string): FollowUserAT => ({ type: 'FOLLOW', id })
+export const unfollowUserAC = (id: string): UnfollowUserAT => ({ type: 'UNFOLLOW', id })
+export const setUsersAC = (users: UserType[]): SetUsersAT => ({type: 'SET-USERS', users})
