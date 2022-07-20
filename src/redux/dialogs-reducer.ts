@@ -18,7 +18,6 @@ export type MessageType = {
   id: number;
   message: string;
 };
-
 export type DialogsPageType = typeof initialState
 
 const initialState = {
