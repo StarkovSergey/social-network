@@ -1,9 +1,7 @@
 import { followUserAC, setUsersAC, UsersPageType, usersReducer, UserType } from './users-reducer'
 
 let users: UserType[] = []
-let startState: UsersPageType = {
-  users,
-}
+let startState: UsersPageType
 
 beforeEach(() => {
   startState = {
@@ -42,6 +40,9 @@ beforeEach(() => {
         location: { city: 'Minas-Tirith', country: 'Gondor' },
       },
     ],
+    pageSize: 10,
+    totalUsersCount: 100,
+    currentPage: 1
   }
 })
 

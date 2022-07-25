@@ -1,3 +1,5 @@
+import { number } from 'prop-types'
+
 export type UsersPageType = typeof initialState
 
 export type UserType = {
@@ -29,10 +31,23 @@ export type SetUsersAT = {
   users: UserType[]
 }
 
-export type ActionsType = FollowUserAT | UnfollowUserAT | SetUsersAT
+export type SetCurrentPageAT = {
+  type: 'SET-CURRENT-PAGE'
+  currentPage: number
+}
+
+export type SetTotalUsersCountAT = {
+  type: 'SET-TOTAL-USERS-COUNT'
+  totalUsersCount: number
+}
+
+export type ActionsType = FollowUserAT | UnfollowUserAT | SetUsersAT | SetCurrentPageAT | SetTotalUsersCountAT
 
 const initialState = {
   users: [] as UserType[],
+  pageSize: 5,
+  totalUsersCount: 0,
+  currentPage: 1,
 }
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsType): UsersPageType => {
@@ -50,7 +65,17 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     case 'SET-USERS':
       return {
         ...state,
-        users: [...state.users, ...action.users ]
+        users: [...action.users],
+      }
+    case 'SET-CURRENT-PAGE':
+      return {
+        ...state,
+        currentPage: action.currentPage,
+      }
+    case 'SET-TOTAL-USERS-COUNT':
+      return {
+        ...state,
+        totalUsersCount: action.totalUsersCount,
       }
     default:
       return state
@@ -59,4 +84,9 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
 
 export const followUserAC = (id: string): FollowUserAT => ({ type: 'FOLLOW', id })
 export const unfollowUserAC = (id: string): UnfollowUserAT => ({ type: 'UNFOLLOW', id })
-export const setUsersAC = (users: UserType[]): SetUsersAT => ({type: 'SET-USERS', users})
+export const setUsersAC = (users: UserType[]): SetUsersAT => ({ type: 'SET-USERS', users })
+export const setCurrentPageAC = (currentPage: number): SetCurrentPageAT => ({ type: 'SET-CURRENT-PAGE', currentPage })
+export const setTotalUsersCountAC = (totalUsersCount: number): SetTotalUsersCountAT => ({
+  type: 'SET-TOTAL-USERS-COUNT',
+  totalUsersCount,
+})
