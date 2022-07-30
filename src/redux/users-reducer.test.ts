@@ -42,7 +42,8 @@ beforeEach(() => {
     ],
     pageSize: 10,
     totalUsersCount: 100,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
   }
 })
 

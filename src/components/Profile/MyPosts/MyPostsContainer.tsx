@@ -1,7 +1,7 @@
 import React from 'react';
 import { addPostAC, ProfilePageType, updateNewPostTextAC } from '../../../redux/profile-reducer'
 import { connect } from 'react-redux';
-import { AppStateType, store } from '../../../redux/redux-store'
+import { AppStateType, store } from '../../../redux/store'
 import { MyPosts } from './MyPosts'
 import { Dispatch } from 'redux'
 

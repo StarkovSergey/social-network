@@ -2,7 +2,7 @@ import React from 'react'
 import { Friends } from './Friends'
 import { connect } from 'react-redux'
 import { SidebarPageType } from '../../../redux/sidebar-reducer'
-import { AppStateType } from '../../../redux/redux-store'
+import { AppStateType } from '../../../redux/store'
 import { Dispatch } from 'redux'
 
 type MapDispatchToPropsReturnType = {};
