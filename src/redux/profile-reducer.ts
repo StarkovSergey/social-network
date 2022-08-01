@@ -1,6 +1,6 @@
 
-export type addPostAT = ReturnType<typeof addPostAC>
-export type updateNewPostTextAT = ReturnType<typeof updateNewPostTextAC>
+export type addPostAT = ReturnType<typeof addPost>
+export type updateNewPostTextAT = ReturnType<typeof updateNewPostText>
 
 type ActionsType = addPostAT | updateNewPostTextAT
 
@@ -51,11 +51,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 }
 
 // это вспомогательная функция, а не часть бизнес-логику. Её можно не отправлять через пропсы, а просто импортировать
-export const addPostAC = () => ({
+export const addPost = () => ({
     type: 'ADD-POST' as const,
   })
 
-export const updateNewPostTextAC = (text: string) => ({
+export const updateNewPostText = (text: string) => ({
     type: 'UPDATE-NEW-POST-TEXT' as const,
     text,
   } as const)

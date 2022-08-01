@@ -1,5 +1,3 @@
-import { number } from 'prop-types'
-
 export type UsersPageType = typeof initialState
 
 export type UserType = {
@@ -93,15 +91,15 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
   }
 }
 
-export const followUserAC = (id: string): FollowUserAT => ({ type: 'FOLLOW', id })
-export const unfollowUserAC = (id: string): UnfollowUserAT => ({ type: 'UNFOLLOW', id })
-export const setUsersAC = (users: UserType[]): SetUsersAT => ({ type: 'SET-USERS', users })
-export const setCurrentPageAC = (currentPage: number): SetCurrentPageAT => ({ type: 'SET-CURRENT-PAGE', currentPage })
-export const setTotalUsersCountAC = (totalUsersCount: number): SetTotalUsersCountAT => ({
+export const follow = (id: string): FollowUserAT => ({ type: 'FOLLOW', id })
+export const unfollow = (id: string): UnfollowUserAT => ({ type: 'UNFOLLOW', id })
+export const setUsers = (users: UserType[]): SetUsersAT => ({ type: 'SET-USERS', users })
+export const setCurrentPage = (currentPage: number): SetCurrentPageAT => ({ type: 'SET-CURRENT-PAGE', currentPage })
+export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountAT => ({
   type: 'SET-TOTAL-USERS-COUNT',
   totalUsersCount,
 })
-export const toggleIsFetchingAC = (isFetching: boolean): ToggleIsFetchingAT => ({
+export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingAT => ({
   type: 'TOGGLE-IS-FETCHING',
   isFetching
 })

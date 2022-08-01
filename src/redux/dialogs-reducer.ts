@@ -4,8 +4,8 @@
 //   newMessageText: string;
 // };
 
-export type updateNewMessageTextAT = ReturnType<typeof updateNewMessageTextAC>
-export type addMessageAT = ReturnType<typeof addMessageAC>
+export type updateNewMessageTextAT = ReturnType<typeof updateNewMessageText>
+export type addMessageAT = ReturnType<typeof addMessage>
 
 export type ActionsTypes = updateNewMessageTextAT | addMessageAT
 
@@ -59,11 +59,11 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
   }
 }
 
-export const updateNewMessageTextAC = (text: string) => ({
+export const updateNewMessageText = (text: string) => ({
   type: 'UPDATE-NEW-MESSAGE-TEXT' as const,
   text,
 })
 
-export const addMessageAC = () => ({
+export const addMessage = () => ({
   type: 'ADD-MESSAGE' as const,
 })

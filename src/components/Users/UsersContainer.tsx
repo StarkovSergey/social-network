@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/store'
-import { Dispatch } from 'redux'
 import {
-  followUserAC,
-  setCurrentPageAC,
-  setTotalUsersCountAC,
-  setUsersAC, toggleIsFetchingAC,
-  unfollowUserAC,
+  follow,
+  setCurrentPage,
+  setTotalUsersCount,
+  setUsers,
+  toggleIsFetching,
+  unfollow,
   UsersPageType,
   UserType,
 } from '../../redux/users-reducer'
@@ -43,7 +43,7 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
   render() {
     return (
       <>
-        {this.props.isFetching && <Loader/>}
+        {this.props.isFetching && <Loader />}
         <Users
           totalUsersCount={this.props.totalUsersCount}
           pageSize={this.props.pageSize}
@@ -58,9 +58,7 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
   }
 }
 
-type MapDispatchToPropsReturnType = ReturnType<typeof mapDispatchToProps>
-
-export type UsersPropsType = MapDispatchToPropsReturnType & UsersPageType
+export type UsersPropsType = MapDispatchToPropsType & UsersPageType
 
 const mapStateToProps = (state: AppStateType): UsersPageType => {
   return {
@@ -72,25 +70,20 @@ const mapStateToProps = (state: AppStateType): UsersPageType => {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  follow: (id: string) => {
-    dispatch(followUserAC(id))
-  },
-  unfollow: (id: string) => {
-    dispatch(unfollowUserAC(id))
-  },
-  setUsers: (users: UserType[]) => {
-    dispatch(setUsersAC(users))
-  },
-  setCurrentPage: (currentPage: number) => {
-    dispatch(setCurrentPageAC(currentPage))
-  },
-  setTotalUsersCount: (totalUsersCount: number) => {
-    dispatch(setTotalUsersCountAC(totalUsersCount))
-  },
-  toggleIsFetching: (isFetching: boolean) => {
-    dispatch(toggleIsFetchingAC(isFetching))
-  }
-})
+type MapDispatchToPropsType = {
+  follow: (id: string) => void
+  unfollow: (id: string) => void
+  setUsers: (users: UserType[]) => void
+  setCurrentPage: (currentPage: number) => void
+  setTotalUsersCount: (totalUsersCount: number) => void
+  toggleIsFetching: (isFetching: boolean) => void
+}
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer)
+export const UsersContainer = connect(mapStateToProps, {
+  follow,
+  unfollow,
+  setUsers,
+  setCurrentPage,
+  setTotalUsersCount,
+  toggleIsFetching,
+})(UsersAPIContainer)

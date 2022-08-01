@@ -1,6 +1,5 @@
-import { followUserAC, setUsersAC, UsersPageType, usersReducer, UserType } from './users-reducer'
+import { follow, setUsers, UsersPageType, usersReducer, UserType } from './users-reducer'
 
-let users: UserType[] = []
 let startState: UsersPageType
 
 beforeEach(() => {
@@ -48,12 +47,12 @@ beforeEach(() => {
 })
 
 test('following should work properly', () => {
-  const endState = usersReducer(startState, followUserAC('1'))
+  const endState = usersReducer(startState, follow('1'))
   expect(endState.users[0].followed).toBeTruthy()
 })
 
 test('unfollowing should work properly', () => {
-  const endState = usersReducer(startState, followUserAC('2'))
+  const endState = usersReducer(startState, follow('2'))
   expect(endState.users[0].followed).toBeFalsy()
 })
 
@@ -70,6 +69,6 @@ test('users should be set correctly', () => {
     location: { city: 'SPb', country: 'Russia' },
   }]
 
-  const endState = usersReducer(startState, setUsersAC(newUsers))
+  const endState = usersReducer(startState, setUsers(newUsers))
   expect(endState.users.at(-1)?.id).toBe('4')
 })
