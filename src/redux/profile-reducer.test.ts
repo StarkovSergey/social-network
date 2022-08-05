@@ -10,6 +10,7 @@ beforeEach(() => {
       { id: 3, message: 'Cat!', likesCount: 5 },
     ],
     newPostText: 'Cats are awesome!',
+    profile: null
   }
 })
 

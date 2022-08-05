@@ -13,11 +13,12 @@ export type MyPostsPropsType = mapDispatchToPropsType & ProfilePageType;
 const mapStateToProps = (state: AppStateType): ProfilePageType => {
   return {
     posts: state.profilePage.posts,
-    newPostText: state.profilePage.newPostText
+    newPostText: state.profilePage.newPostText,
+    profile: state.profilePage.profile
   };
 };
 
-export const MyPostsContainer: any = connect(mapStateToProps, {
+export const MyPostsContainer = connect(mapStateToProps, {
   updateNewPostText,
   addPost,
 })(MyPosts);

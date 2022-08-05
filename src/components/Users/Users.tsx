@@ -3,6 +3,7 @@ import style from './Users.module.css'
 import userImagePlaceholder from '../../assets/images/user-placeholder.png'
 import React from 'react'
 import { UserType } from '../../redux/users-reducer'
+import { NavLink } from 'react-router-dom'
 
 type PropsType = {
   totalUsersCount: number
@@ -56,13 +57,15 @@ export function Users(props: PropsType) {
         {props.users.map((user, index) => (
           <li key={index}>
             <div>
-              <img
-                className={style.img}
-                src={user.photos.small ? user.photos.small : userImagePlaceholder}
-                alt=""
-                width="50"
-                height="50"
-              />
+              <NavLink to={`/profile/${user.id}`}>
+                <img
+                  className={style.img}
+                  src={user.photos.small ? user.photos.small : userImagePlaceholder}
+                  alt=""
+                  width="50"
+                  height="50"
+                />
+              </NavLink>
               {user.followed ? (
                 <button
                   onClick={() => {
