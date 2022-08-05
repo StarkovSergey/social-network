@@ -1,11 +1,12 @@
 import styles from './Header.module.css'
+import logo from '../../assets/images/Lord-Of-The-Rings-PNG-Photos.png'
 
 export const Header = () => {
   return (
     <header className={styles.header}>
       <img
-        src="https://www.seekpng.com/png/full/144-1441992_lord-of-the-rings-clipart-transparent-lord-of.png"
-        alt=""
+        src={logo}
+        alt="logo"
       />
     </header>
   );
