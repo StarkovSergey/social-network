@@ -1,9 +1,9 @@
-import { ReactComponent } from '*.svg'
 import style from './Users.module.css'
 import userImagePlaceholder from '../../assets/images/user-placeholder.png'
 import React from 'react'
 import { UserType } from '../../redux/users-reducer'
 import { NavLink } from 'react-router-dom'
+import { followAPI } from '../../api/api'
 
 type PropsType = {
   totalUsersCount: number
@@ -69,16 +69,25 @@ export function Users(props: PropsType) {
               {user.followed ? (
                 <button
                   onClick={() => {
-                    props.unfollow(user.id)
+                    followAPI.unfollow(user.id).then((data) => {
+                      if (data.resultCode === 0) {
+                        props.unfollow(user.id)
+                      }
+                    })
                   }}>
-                  follow
+                  unfollow
                 </button>
               ) : (
                 <button
                   onClick={() => {
-                    props.follow(user.id)
+                    followAPI.follow(user.id)
+                      .then((data) => {
+                        if (data.resultCode === 0) {
+                          props.follow(user.id)
+                        }
+                      })
                   }}>
-                  unfollow
+                  follow
                 </button>
               )}
             </div>
