@@ -25,3 +25,8 @@ ul {
 .pagination__button--active {
   background-color: plum;
 }
+
+.follow-button {
+  border-radius: 5px;
+}
+

@@ -1,4 +1,4 @@
-import { follow, setUsers, UsersPageType, usersReducer, UserType } from './users-reducer'
+import { follow, setUsers, toggleIsFollowingInProgress, UsersPageType, usersReducer, UserType } from './users-reducer'
 
 let startState: UsersPageType
 
@@ -42,7 +42,8 @@ beforeEach(() => {
     pageSize: 10,
     totalUsersCount: 100,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    isFollowingInProgress: []
   }
 })
 
