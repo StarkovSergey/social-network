@@ -4,11 +4,13 @@ import React from 'react'
 import { toggleIsFollowingInProgress, UserType } from '../../redux/users-reducer'
 import { NavLink } from 'react-router-dom'
 import { followAPI } from '../../api/api'
+import { Loader } from '../common/Loader/Loader'
 
 type PropsType = {
   totalUsersCount: number
   pageSize: number
   currentPage: number
+  isFetching: boolean
   users: UserType[]
   changePage: (pageNumber: number) => void
   follow: (id: string) => void
@@ -57,6 +59,7 @@ export function Users(props: PropsType) {
           &gt;&gt;
         </button>
       </div>
+      {props.isFetching && <Loader />}
       <ul>
         {props.users.map((user, index) => (
           <li key={index}>

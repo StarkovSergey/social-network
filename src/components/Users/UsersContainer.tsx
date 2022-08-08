@@ -12,7 +12,6 @@ import {
 } from '../../redux/users-reducer'
 import React from 'react'
 import { Users } from './Users'
-import { Loader } from '../common/Loader/Loader'
 import { usersAPI } from '../../api/api'
 
 export class UsersAPIContainer extends React.Component<UsersPropsType> {
@@ -41,7 +40,6 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
   render() {
     return (
       <>
-        {this.props.isFetching && <Loader />}
         <Users
           totalUsersCount={this.props.totalUsersCount}
           pageSize={this.props.pageSize}
@@ -52,6 +50,7 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
           unfollow={this.props.unfollow}
           toggleIsFollowingInProgress={this.props.toggleIsFollowingInProgress}
           isFollowingInProgress={this.props.isFollowingInProgress}
+          isFetching={this.props.isFetching}
         />
       </>
     )
