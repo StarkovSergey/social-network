@@ -12,13 +12,14 @@ type MapDispatchToPropsReturnType = {
   addMessage: () => void;
 };
 
-export type DialogsPropsType = MapDispatchToPropsReturnType & DialogsPageType;
+export type DialogsPropsType = MapDispatchToPropsReturnType & DialogsPageType & {isAuth: boolean}
 
-const mapStateToProps = (state: AppStateType): DialogsPageType => {
+const mapStateToProps = (state: AppStateType): DialogsPageType & {isAuth: boolean} => {
   return {
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
     newMessageText: state.dialogsPage.newMessageText,
+    isAuth: state.auth.isAuth
   };
 };
 

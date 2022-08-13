@@ -1,26 +1,28 @@
-import style from './Dialogs.module.css';
-import { DialogItem } from './DialogItem/DialogItem';
-import { Message } from './Message/Message';
-import React, { ChangeEvent } from 'react';
-import { DialogType, MessageType } from '../../redux/dialogs-reducer';
+import style from './Dialogs.module.css'
+import { DialogItem } from './DialogItem/DialogItem'
+import { Message } from './Message/Message'
+import React, { ChangeEvent } from 'react'
 import { DialogsPropsType } from './DialogsContainer'
+import { Redirect } from 'react-router-dom'
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const dialogsElements = props.dialogs.map((dialog: any) => (
     <DialogItem name={dialog.name} id={dialog.id} avatar={dialog.avatar} key={dialog.id} />
-  ));
+  ))
 
-  const messagesElements = props.messages.map((message: any) => (
-    <Message message={message.message} key={message.id} />
-  ));
+  const messagesElements = props.messages.map((message: any) => <Message message={message.message} key={message.id} />)
 
   const addMessage = () => {
     props.addMessage()
-  };
+  }
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateNewMessageText(evt.currentTarget.value);
-  };
+    props.updateNewMessageText(evt.currentTarget.value)
+  }
+
+  if (!props.isAuth) {
+    return <Redirect to={'/login'} />
+  }
 
   return (
     <div className={style.dialogs}>
@@ -37,5 +39,5 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}

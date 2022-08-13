@@ -22,7 +22,6 @@ type ActionsType = SetUserDataAT
 export const authReducer = (state: AuthStateType = initialState, action: ActionsType): AuthStateType => {
   switch (action.type) {
     case 'SET-USER-DATA':
-      console.log(action.data)
       return {
         ...state,
         ...action.data,
