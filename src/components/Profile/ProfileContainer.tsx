@@ -25,6 +25,7 @@ class ProfileAPIContainer extends React.Component<PropsType> {
       userId = String(2)
     }
 
+  // TODO: crate API and Thunk
     profileAPI.getUser(userId)
       .then((data) => {
         this.props.setUserProfile(data)

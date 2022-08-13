@@ -7,6 +7,7 @@ import { AppStateType } from '../../redux/store'
 
 export type HeaderPropsType = MapDispatchToProps & AuthStateType
 
+// TODO: crate API and Thunk
 class HeaderContainer extends React.Component<HeaderPropsType> {
   componentDidMount() {
     axios

@@ -1,4 +1,4 @@
-import { follow, setUsers, toggleIsFollowingInProgress, UsersPageType, usersReducer, UserType } from './users-reducer'
+import { followSuccess, setUsers, toggleIsFollowingInProgress, UsersPageType, usersReducer, UserType } from './users-reducer'
 
 let startState: UsersPageType
 
@@ -48,12 +48,12 @@ beforeEach(() => {
 })
 
 test('following should work properly', () => {
-  const endState = usersReducer(startState, follow('1'))
+  const endState = usersReducer(startState, followSuccess('1'))
   expect(endState.users[0].followed).toBeTruthy()
 })
 
 test('unfollowing should work properly', () => {
-  const endState = usersReducer(startState, follow('2'))
+  const endState = usersReducer(startState, followSuccess('2'))
   expect(endState.users[0].followed).toBeFalsy()
 })
 

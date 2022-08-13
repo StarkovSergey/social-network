@@ -1,9 +1,9 @@
 import style from './Users.module.css'
 import userImagePlaceholder from '../../assets/images/user-placeholder.png'
 import React from 'react'
-import { toggleIsFollowingInProgress, UserType } from '../../redux/users-reducer'
+import { follow, unfollow, UserType } from '../../redux/users-reducer'
 import { NavLink } from 'react-router-dom'
-import { followAPI } from '../../api/api'
+import { usersAPI } from '../../api/api'
 import { Loader } from '../common/Loader/Loader'
 
 type PropsType = {
@@ -15,7 +15,6 @@ type PropsType = {
   changePage: (pageNumber: number) => void
   follow: (id: string) => void
   unfollow: (id: string) => void
-  toggleIsFollowingInProgress: (id: string, isFetching: boolean) => void
   isFollowingInProgress: string[]
 }
 
@@ -25,18 +24,16 @@ export function Users(props: PropsType) {
   return (
     <div>
       <div className={style.pagination}>
-        <button disabled={props.currentPage === 1}
+        <button
+          disabled={props.currentPage === 1}
           className={`${style['pagination__button']}`}
-          onClick={() => {
-            props.changePage(1)
-          }}>
+          onClick={() => props.changePage(1)}>
           &lt;&lt;
         </button>
-        <button disabled={props.currentPage === 1}
+        <button
+          disabled={props.currentPage === 1}
           className={`${style['pagination__button']}`}
-          onClick={() => {
-            props.changePage(props.currentPage - 1 || 1)
-          }}>
+          onClick={() => props.changePage(props.currentPage - 1 || 1)}>
           &lt;
         </button>
         <div className={`${style['pagination__button']} ${style['pagination__button--active']}`}>
@@ -45,76 +42,66 @@ export function Users(props: PropsType) {
         <button
           disabled={props.currentPage === pagesCount}
           className={`${style['pagination__button']}`}
-          onClick={() => {
-            props.changePage(props.currentPage + 1)
-          }}>
+          onClick={() => props.changePage(props.currentPage + 1)}>
           &gt;
         </button>
         <button
           disabled={props.currentPage === pagesCount}
           className={`${style['pagination__button']}`}
-          onClick={() => {
-            props.changePage(pagesCount)
-          }}>
+          onClick={() => props.changePage(pagesCount)}>
           &gt;&gt;
         </button>
       </div>
-      {props.isFetching && <Loader />}
-      <ul>
-        {props.users.map((user, index) => (
-          <li key={index}>
-            <div>
-              <NavLink to={`/profile/${user.id}`}>
-                <img
-                  className={style.img}
-                  src={user.photos.small ? user.photos.small : userImagePlaceholder}
-                  alt=""
-                  width="50"
-                  height="50"
-                />
-              </NavLink>
-              {user.followed ? (
-                <button className={style['follow-button']} disabled={props.isFollowingInProgress.some((id) => id === user.id)}
-                  onClick={() => {
-                    props.toggleIsFollowingInProgress(user.id, true)
-                    followAPI.unfollow(user.id).then((data) => {
-                      if (data.resultCode === 0) {
-                        props.unfollow(user.id)
-                      }
-                      props.toggleIsFollowingInProgress(user.id, false)
-                    })
-                  }}>
-                  unfollow
-                </button>
-              ) : (
-                <button className={style['follow-button']} disabled={props.isFollowingInProgress.some((id) => id === user.id)}
-                  onClick={() => {
-                    props.toggleIsFollowingInProgress(user.id, true)
-                    followAPI.follow(user.id)
-                      .then((data) => {
-                        if (data.resultCode === 0) {
-                          props.follow(user.id)
-                        }
-                        props.toggleIsFollowingInProgress(user.id, false)
-                      })
-                  }}>
-                  follow
-                </button>
-              )}
-            </div>
-            <div>
+      {props.isFetching ? (
+        <Loader />
+      ) : (
+        <ul>
+          {props.users.map((user, index) => (
+            <li key={index}>
               <div>
-                <b>{user.name}</b>
-                <p>{user.status}</p>
+                <NavLink to={`/profile/${user.id}`}>
+                  <img
+                    className={style.img}
+                    src={user.photos.small ? user.photos.small : userImagePlaceholder}
+                    alt=""
+                    width="50"
+                    height="50"
+                  />
+                </NavLink>
+                {user.followed ? (
+                  <button
+                    className={style['follow-button']}
+                    disabled={props.isFollowingInProgress.some((id) => id === user.id)}
+                    onClick={() => {
+                      props.unfollow(user.id)
+                    }}>
+                    unfollow
+                  </button>
+                ) : (
+                  <button
+                    className={style['follow-button']}
+                    disabled={props.isFollowingInProgress.some((id) => id === user.id)}
+                    onClick={() => {
+                      props.follow(user.id)
+                    }}>
+                    follow
+                  </button>
+                )}
               </div>
               <div>
-                <span>{'user.location.country'}</span>
-                <span>{'user.location.city'}</span>
+                <div>
+                  <b>{user.name}</b>
+                  <p>{user.status}</p>
+                </div>
+                <div>
+                  <span>{'user.location.country'}</span>
+                  <span>{'user.location.city'}</span>
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
