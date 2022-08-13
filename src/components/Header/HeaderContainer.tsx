@@ -1,26 +1,15 @@
 import { Header } from './Header'
 import React from 'react'
-import axios from 'axios'
-import { AuthStateType, setAuthUserData } from '../../redux/auth-reducer'
+import { AuthStateType, getAuthUserData, setAuthUserData } from '../../redux/auth-reducer'
 import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/store'
 
 export type HeaderPropsType = MapDispatchToProps & AuthStateType
 
-// TODO: crate API and Thunk
 class HeaderContainer extends React.Component<HeaderPropsType> {
   componentDidMount() {
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/auth/me`, {
-          withCredentials: true
-        }
-      )
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          this.props.setAuthUserData(response.data.data)
-        }
-      })
+
+    this.props.getAuthUserData()
   }
 
   render() {
@@ -35,7 +24,8 @@ const mapStateToProps = (state: AppStateType): AuthStateType => ({
   isAuth: state.auth.isAuth
 })
 type MapDispatchToProps = {
+  getAuthUserData: () => void
   setAuthUserData: (data: AuthStateType) => void
 }
 
-export default connect(mapStateToProps, {setAuthUserData: setAuthUserData})(HeaderContainer)
+export default connect(mapStateToProps, {getAuthUserData, setAuthUserData})(HeaderContainer)

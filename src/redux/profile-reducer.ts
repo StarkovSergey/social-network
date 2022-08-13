@@ -1,3 +1,6 @@
+import { Dispatch } from 'redux'
+import { usersAPI } from '../api/api'
+
 export type addPostAT = ReturnType<typeof addPost>
 export type updateNewPostTextAT = ReturnType<typeof updateNewPostText>
 
@@ -81,19 +84,23 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
   return state
 }
 
-// это вспомогательная функция, а не часть бизнес-логику. Её можно не отправлять через пропсы, а просто импортировать
 export const addPost = () => ({
   type: 'ADD-POST' as const,
 })
 
-export const updateNewPostText = (text: string) =>
-  ({
+export const updateNewPostText = (text: string) => ({
     type: 'UPDATE-NEW-POST-TEXT' as const,
     text,
-  })
+})
 
-// TODO correct!
-export const setUserProfile = (profile: any) => ({
+const setUserProfile = (profile: ProfileType) => ({
   type: 'SET-USER-PROFILE' as const,
   profile,
 })
+
+export const getUserProfile = (id: string) => (dispatch: Dispatch) => {
+  usersAPI.getProfile(id)
+    .then((data) => {
+      dispatch(setUserProfile(data))
+    })
+}

@@ -1,13 +1,12 @@
 import React from 'react'
 import { Profile } from './Profile'
 import { connect } from 'react-redux'
-import { ProfilePageType, ProfileType, setUserProfile } from '../../redux/profile-reducer'
+import { getUserProfile, ProfilePageType } from '../../redux/profile-reducer'
 import { AppStateType } from '../../redux/store'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { profileAPI } from '../../api/api'
 
 type MapDispatchToPropsType = {
-  setUserProfile: (profile: ProfileType) => void
+  getUserProfile: (id: string) => void
 }
 
 type PathParamsType = {
@@ -25,11 +24,7 @@ class ProfileAPIContainer extends React.Component<PropsType> {
       userId = String(2)
     }
 
-  // TODO: crate API and Thunk
-    profileAPI.getUser(userId)
-      .then((data) => {
-        this.props.setUserProfile(data)
-      })
+    this.props.getUserProfile(userId)
   }
 
   render() {
@@ -44,8 +39,7 @@ const mapStateToProps = (state: AppStateType): ProfilePageType => ({
   newPostText: state.profilePage.newPostText
 })
 
-
 const WithUrlDataContainerComponent = withRouter(ProfileAPIContainer)
 
-export const ProfileContainer = connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent)
+export const ProfileContainer = connect(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent)
 

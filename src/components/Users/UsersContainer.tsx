@@ -1,20 +1,13 @@
 import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/store'
 import {
-  followSuccess,
+  follow,
   getUsers,
-  setCurrentPage,
-  setTotalUsersCount,
-  setUsers,
-  toggleIsFetching,
-  toggleIsFollowingInProgress,
-  unfollowSuccess,
+  setCurrentPage, unfollow,
   UsersPageType,
-  UserType,
 } from '../../redux/users-reducer'
 import React from 'react'
 import { Users } from './Users'
-import { usersAPI } from '../../api/api'
 
 export class UsersAPIContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
@@ -66,8 +59,8 @@ type MapDispatchToPropsType = {
 }
 
 export const UsersContainer = connect(mapStateToProps, {
-  follow: followSuccess,
-  unfollow: unfollowSuccess,
+  follow,
+  unfollow,
   setCurrentPage,
   getUsers,
 })(UsersAPIContainer)

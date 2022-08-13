@@ -20,13 +20,17 @@ export const usersAPI = {
   follow(userID: string) {
     return instance.post(`follow/${userID}`)
       .then((response) => response.data)
+  },
+  getProfile(userID: string) {
+    return instance.get(`profile/${userID}`)
+      .then((response) => response.data)
   }
 }
 
 
-export const profileAPI = {
-  getUser(userID: string) {
-    return instance.get(`profile/${userID}`)
+export const authAPI = {
+  me() {
+    return instance.get(`auth/me`)
       .then((response) => response.data)
   }
 }

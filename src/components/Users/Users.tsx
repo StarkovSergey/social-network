@@ -1,9 +1,8 @@
 import style from './Users.module.css'
 import userImagePlaceholder from '../../assets/images/user-placeholder.png'
 import React from 'react'
-import { follow, unfollow, UserType } from '../../redux/users-reducer'
+import { UserType } from '../../redux/users-reducer'
 import { NavLink } from 'react-router-dom'
-import { usersAPI } from '../../api/api'
 import { Loader } from '../common/Loader/Loader'
 
 type PropsType = {
