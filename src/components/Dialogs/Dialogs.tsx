@@ -20,10 +20,6 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     props.updateNewMessageText(evt.currentTarget.value)
   }
 
-  if (!props.isAuth) {
-    return <Redirect to={'/login'} />
-  }
-
   return (
     <div className={style.dialogs}>
       <ul className={style['dialogs-list']}>{dialogsElements}</ul>
