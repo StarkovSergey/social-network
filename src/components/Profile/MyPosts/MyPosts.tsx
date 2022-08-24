@@ -20,7 +20,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
   return (
     <div className={style['posts-box']}>
-      <h3>my posts</h3>
+      <h3>posts</h3>
       <div>
         <div>
           <textarea value={props.newPostText} id={'new-post'} onChange={textareaChangeHandler} />
