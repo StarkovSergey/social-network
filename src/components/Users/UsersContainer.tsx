@@ -1,14 +1,10 @@
 import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/store'
-import {
-  follow,
-  getUsers,
-  setCurrentPage, unfollow,
-  UsersPageType,
-} from '../../redux/users-reducer'
+import { follow, getUsers, setCurrentPage, unfollow, UsersPageType } from '../../redux/users-reducer'
 import React from 'react'
 import { Users } from './Users'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { compose } from 'redux'
 
 export class UsersAPIContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
@@ -59,9 +55,12 @@ type MapDispatchToPropsType = {
   getUsers: (currentPage: number, pageSize: number) => void
 }
 
-export const UsersContainer = withAuthRedirect(connect(mapStateToProps, {
-  follow,
-  unfollow,
-  setCurrentPage,
-  getUsers,
-})(UsersAPIContainer))
+export const UsersContainer = compose<React.ComponentType>(
+  withAuthRedirect,
+  connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setCurrentPage,
+    getUsers,
+  })
+)(UsersAPIContainer)
