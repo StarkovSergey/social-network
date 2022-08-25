@@ -7,6 +7,8 @@ import { ProfileStatus } from './ProfileStatus'
 
 type PropsType = {
   profile: ProfileType
+  status: string
+  updateStatus: (status: string) => void
 }
 
 export const ProfileInfo = (props: PropsType) => {
@@ -25,7 +27,7 @@ export const ProfileInfo = (props: PropsType) => {
         </div>
         <b className={style.name}>{props.profile.fullName}</b>
         <p>{props.profile.aboutMe}</p>
-        <ProfileStatus status={"Hello friends!"}/>
+        <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
       </div>
       <div className={style.contacts}>
         <h3 className={style.title}>Contacts</h3>

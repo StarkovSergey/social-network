@@ -2,6 +2,12 @@ import React, { ChangeEvent } from 'react'
 
 type PropsType = {
   status: string
+  updateStatus: (status: string) => void
+}
+
+type LocalStateType = {
+  editMode: boolean
+  statusText: string
 }
 
 export class ProfileStatus extends React.Component<any, any> {
@@ -18,9 +24,20 @@ export class ProfileStatus extends React.Component<any, any> {
   }
   deactivateEditMode = () => {
     this.setState({editMode: false})
+    this.props.updateStatus(this.state.statusText)
   }
   inputChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     this.setState({statusText: evt.currentTarget.value})
+  }
+
+  componentDidUpdate(prevProps: PropsType, prevState: LocalStateType) {
+    if (prevProps.status !== this.props.status) {
+      this.setState({
+        status: this.props.status
+      })
+    }
+
+    console.log('componentDidUpdate')
   }
 
   render() {
@@ -28,7 +45,7 @@ export class ProfileStatus extends React.Component<any, any> {
       <div>
         {!this.state.editMode && (
           <div>
-            <span onClick={this.activateEditMode}>{this.props.status}</span>
+            <span onClick={this.activateEditMode}>{this.props.status ? this.props.status : 'empty status'}</span>
           </div>
         )}
         {this.state.editMode && (
