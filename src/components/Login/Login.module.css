@@ -1,0 +1,16 @@
+.login-section {
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: fit-content;
+}
+
+.form input {
+  padding: 5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}

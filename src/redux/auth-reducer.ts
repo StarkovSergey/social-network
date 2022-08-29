@@ -11,7 +11,8 @@ const initialState: AuthStateType = {
 export type AuthStateType = {
   id: string | null
   email: string | null
-  login: string | null,
+  login: string | null
+} & {
   isAuth: boolean
 }
 

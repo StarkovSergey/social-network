@@ -18,10 +18,9 @@ body {
   min-height: 100%;
   margin: 0;
   color: #000000;
-  font-family: "PT Sans Narrow", "Arial", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
   line-height: 27px;
-  background-color: var(--lightgray);
 }
 
 img {

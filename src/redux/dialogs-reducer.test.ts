@@ -4,7 +4,6 @@ import {
   dialogsReducer,
   DialogType,
   MessageType,
-  updateNewMessageText,
 } from './dialogs-reducer'
 
 let startState: DialogsPageType;
@@ -24,21 +23,13 @@ beforeEach(() => {
       {id: 2, message: 'How is your morris?'},
       {id: 3, message: 'Любо!'},
     ] as Array<MessageType>,
-    newMessageText: 'Hello world!',
   }
 })
 
-test('Message text should be updated', () => {
-  const newMessageText = 'Dragons'
-  const endState: DialogsPageType = dialogsReducer(startState, updateNewMessageText(newMessageText))
-
-  expect(endState.newMessageText).toBe('Dragons')
-})
 
 test('New message should be added', () => {
-  const endState: DialogsPageType = dialogsReducer(startState, addMessage())
+  const endState: DialogsPageType = dialogsReducer(startState, addMessage('Hello world'))
 
   expect(endState.messages.length).toBe(4)
   expect(endState.messages[0].message).toBe('Hello world!')
-  expect(endState.newMessageText).toBe('')
 })
