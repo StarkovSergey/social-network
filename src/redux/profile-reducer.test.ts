@@ -1,4 +1,4 @@
-import { addPost, ProfilePageType, profileReducer, updateNewPostText } from './profile-reducer'
+import { addPost, ProfilePageType, profileReducer } from './profile-reducer'
 
 let startState: ProfilePageType
 
@@ -9,23 +9,7 @@ beforeEach(() => {
       { id: 2, message: "It's my first post", likesCount: 5 },
       { id: 3, message: 'Cat!', likesCount: 5 },
     ],
-    newPostText: 'Cats are awesome!',
     profile: null,
     status: ''
   }
-})
-
-test('post should be added', () => {
-  const endState = profileReducer(startState, addPost())
-
-  expect(endState.posts.length).toBe(4)
-  expect(endState.posts[0].message).toBe('Cats are awesome!')
-  expect(endState.newPostText).toBe('')
-})
-
-test('post should be updated correctly', () => {
-  const newPostText = 'dragon'
-
-  const endState = profileReducer(startState, updateNewPostText(newPostText))
-  expect(endState.newPostText).toBe(newPostText)
 })
