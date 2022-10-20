@@ -3,7 +3,7 @@ import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
 import React from 'react'
 import { DialogsPropsType } from './DialogsContainer'
-import { Field, InjectedFormProps, reduxForm } from 'redux-form'
+import { Field, Form, Formik } from 'formik'
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const dialogsElements = props.dialogs.map((dialog: any) => (
@@ -20,26 +20,51 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     <div className={style.dialogs}>
       <ul className={style['dialogs-list']}>{dialogsElements}</ul>
       <ul className={style['messages-list']}>{messagesElements}</ul>
-      <AddMessageFormRedux onSubmit={addMessage}/>
+      <AddMessageForm onSubmit={addMessage} />
     </div>
   )
 }
 
-const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const AddMessageForm: React.FC<{onSubmit: (values: FormDataType) => void}> = (props) => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div className="new-message">
-        <Field component="textarea" name="newMessageText" placeholder="Enter your message..." className="new-message__textarea"/>
+  <Formik
+    initialValues={{
+      newMessageText: '',
+    }}
+    validate={(values) => {
+      const errors: { newMessageText?: string } = {}
 
-        <button className="new-message__add-button">
-          Send
+      if (!values.newMessageText) {
+        errors.newMessageText = 'Required'
+      }
+
+      return errors
+    }}
+
+    onSubmit={(values, { setSubmitting }) => {
+      console.log(values)
+      props.onSubmit(values)
+      setSubmitting(false)
+    }}>
+    {({ isSubmitting, errors, touched }) => (
+      <Form>
+        <div>
+          <div className="new-message">
+            <Field component="textarea" name="newMessageText" placeholder="Enter your message..." className="new-message__textarea" />
+          </div>
+        </div>
+        {errors.newMessageText && touched.newMessageText && errors.newMessageText}
+
+        <button type="submit" disabled={isSubmitting}>
+          Add post
         </button>
-      </div>
-    </form>
+      </Form>
+    )}
+  </Formik>
   )
 }
 
-const AddMessageFormRedux = reduxForm<FormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
+
 
 type FormDataType = {
   newMessageText: string

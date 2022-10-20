@@ -19,7 +19,7 @@ export const ProfileInfo = (props: PropsType) => {
   return (
     <div className={style.profile}>
       <div className={style['profile-header']}>
-        <img src="//unsplash.it/1000/400" alt="" width="1000" height="400"></img>
+        <img src="https://efi.int/sites/default/files/2020-12/placeholder.jpeg" alt="" width="1000" height="400"></img>
       </div>
       <div className={style.description}>
         <div className={style.photo}>

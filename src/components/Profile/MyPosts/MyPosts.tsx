@@ -2,7 +2,7 @@ import style from './MyPosts.module.css'
 import { Post } from './Post/Post'
 import React from 'react'
 import { MyPostsPropsType } from './MyPostsContainer'
-import { Field, InjectedFormProps, reduxForm } from 'redux-form'
+import { Field, Form, Formik } from 'formik'
 
 export const MyPosts = (props: MyPostsPropsType) => {
   const postsElements = props.posts.map((post) => (
@@ -17,27 +17,52 @@ export const MyPosts = (props: MyPostsPropsType) => {
     <div className={style['posts-box']}>
       <h3>posts</h3>
       <div>
-          <AddPostFormRedux onSubmit={addPost} />
+        <AddPostForm onSubmit={addPost} />
       </div>
       <div className={style.posts}>{postsElements}</div>
     </div>
   )
 }
 
-const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const AddPostForm: React.FC<{onSubmit: (values: FormDataType) => void}> = (props) => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <div>
-          <Field component="textarea" name="newPostText" placeholder="Enter your post..." />
-        </div>
-        <button>Add post</button>
-      </div>
-    </form>
+  <Formik
+    initialValues={{
+      newPostText: '',
+    }}
+    validate={(values) => {
+      const errors: { newPostText?: string } = {}
+
+      if (!values.newPostText) {
+        errors.newPostText = 'Required'
+      }
+
+      return errors
+    }}
+
+    onSubmit={(values, { setSubmitting }) => {
+      console.log(values)
+      props.onSubmit(values)
+      setSubmitting(false)
+    }}>
+    {({ isSubmitting, errors, touched }) => (
+      <Form>
+          <div>
+            <div>
+              <Field component="textarea" name="newPostText" placeholder="Enter your post..." />
+            </div>
+          </div>
+        {errors.newPostText && touched.newPostText && errors.newPostText}
+
+        <button type="submit" disabled={isSubmitting}>
+          Add post
+        </button>
+      </Form>
+    )}
+  </Formik>
   )
 }
 
-const AddPostFormRedux = reduxForm<FormDataType>({ form: 'dialogAddMessageForm' })(AddPostForm)
 
 type FormDataType = {
   newPostText: string

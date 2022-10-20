@@ -21,12 +21,12 @@ export type DialogsPageType = typeof initialState
 
 const initialState = {
   dialogs: [
-    {id: 1, name: 'Brendan', avatar: '//unsplash.it/50/50'},
-    {id: 2, name: 'Milada', avatar: '//unsplash.it/51/50'},
-    {id: 3, name: 'Vera', avatar: '//unsplash.it/50/51'},
-    {id: 4, name: 'Vita', avatar: '//unsplash.it/49/50'},
-    {id: 5, name: 'Maks', avatar: '//unsplash.it/50/49'},
-    {id: 6, name: 'Viktoria', avatar: '//unsplash.it/51/51'},
+    {id: 1, name: 'Brendan', avatar: 'https://www.clipartmax.com/png/middle/123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png'},
+    {id: 2, name: 'Milada', avatar: 'https://www.clipartmax.com/png/middle/123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png'},
+    {id: 3, name: 'Vera', avatar: 'https://www.clipartmax.com/png/middle/123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png'},
+    {id: 4, name: 'Vita', avatar: 'https://www.clipartmax.com/png/middle/123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png'},
+    {id: 5, name: 'Maks', avatar: 'https://www.clipartmax.com/png/middle/123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png'},
+    {id: 6, name: 'Viktoria', avatar: 'https://www.clipartmax.com/png/middle/123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png'},
   ] as Array<DialogType>,
   messages: [
     {id: 1, message: 'Hi'},
@@ -50,11 +50,6 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
       return state
   }
 }
-
-// export const updateNewMessageText = (text: string) => ({
-//   type: 'UPDATE-NEW-MESSAGE-TEXT' as const,
-//   text,
-// })
 
 export const addMessage = (newMessage: string) => ({
   type: 'ADD-MESSAGE' as const,

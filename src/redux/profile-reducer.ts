@@ -79,8 +79,6 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
     default:
       return state
   }
-
-  return state
 }
 
 export const addPost = (newPost: string) => ({

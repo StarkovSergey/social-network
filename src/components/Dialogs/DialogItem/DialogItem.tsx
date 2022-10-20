@@ -14,7 +14,7 @@ export const DialogItem: React.FC<DialogItemPropsType> = (props) => {
   return (
     <li className={`${style.dialog}`}>
       <NavLink to={path} activeClassName={style.active} className={style['dialog-link']}>
-        <div className="avatar">
+        <div className={style.avatar}>
           <img src={props.avatar}/>
         </div>
         <span>{props.name}</span>

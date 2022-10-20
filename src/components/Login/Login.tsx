@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './Login.module.css'
-import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import { authAPI } from '../../api/api'
+import { Field, Form, Formik } from 'formik'
 
 export type FormDataType = {
   email: string
@@ -9,39 +9,56 @@ export type FormDataType = {
   rememberMe: boolean
 }
 
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-
-
-  return (
-    <form className={style.form} onSubmit={props.handleSubmit}>
-      <Field name="login" placeholder={"login"} component={"input"} autoComplete={"off"}/>
-      <Field name="password" placeholder={"password"} component={"input"} autoComplete={"off"}/>
-      <label htmlFor="checkbox-remember">
-        <Field name="rememberMe" type={"checkbox"} component={"input"} id={"checkbox-remember"}/>
-        remember me
-      </label>
-      <button>Log in</button>
-    </form>
-  )
-}
-
-const LoginReduxForm = reduxForm<FormDataType>({
-  form: 'login'
-})(LoginForm)
-
-
 export const Login = () => {
-  const onSubmit = (formData: FormDataType) => {
-    console.log(formData)
-    authAPI.login(formData).then((response) => {
-
-      })
-  }
 
   return (
     <div className={style['login-section']}>
       <h1>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit}/>
+
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+          rememberMe: false,
+        }}
+        validate={(values) => {
+          const errors: { email?: string, password?: string } = {}
+
+          if (!values.email) {
+            errors.email = 'Required'
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+            errors.email = 'Invalid email address'
+          }
+
+          if (values.password.length < 4) {
+            errors.password = 'Min length is 4'
+          }
+
+          return errors
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          console.log(values)
+          authAPI.login(values).then((response) => {})
+          setSubmitting(false)
+        }}>
+        {({ isSubmitting, errors, touched }) => (
+          <Form>
+            <Field type="email" name="email" placeholder="email" autocompleted="off"/>
+            {errors.email && touched.email && errors.email}
+
+            <Field type="password" name="password" placeholder="password"/>
+            {errors.password && touched.password && errors.password}
+
+            <label>
+              <Field type="checkbox" name="rememberMe"/>
+              Remember me
+            </label>
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+          </Form>
+        )}
+      </Formik>
     </div>
   )
 }
