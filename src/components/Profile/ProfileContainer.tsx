@@ -5,6 +5,7 @@ import { getStatus, getUserProfile, ProfilePageType, updateStatus } from '../../
 import { AppStateType } from '../../redux/store'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
 type MapDispatchToPropsType = {
   getUserProfile: (id: string) => void
@@ -16,11 +17,10 @@ type PathParamsType = {
   userId: string
 }
 
-export type ProfilePropsType = MapDispatchToPropsType & ProfilePageType & {isAuth: boolean}
-type PropsType  = RouteComponentProps<PathParamsType> & ProfilePropsType
+export type ProfilePropsType = MapDispatchToPropsType & ProfilePageType & { isAuth: boolean }
+type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
 class ProfileAPIContainer extends React.Component<PropsType> {
-
   componentDidMount() {
     let userId = this.props.match.params.userId
     if (!userId) {
@@ -32,19 +32,25 @@ class ProfileAPIContainer extends React.Component<PropsType> {
   }
 
   render() {
-    return <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
+    return (
+      <Profile
+        {...this.props}
+        profile={this.props.profile}
+        status={this.props.status}
+        updateStatus={this.props.updateStatus}
+      />
+    )
   }
 }
 
 const mapStateToProps = (state: AppStateType): ProfilePageType => ({
   profile: state.profilePage.profile,
   posts: state.profilePage.posts,
-  status: state.profilePage.status
+  status: state.profilePage.status,
 })
 
 export const ProfileContainer = compose<React.ComponentType>(
-  connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
-  withRouter,
+  connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }),
+  withRouter
   // withAuthRedirect
 )(ProfileAPIContainer)
-

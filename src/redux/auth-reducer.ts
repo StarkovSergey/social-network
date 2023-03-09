@@ -1,5 +1,6 @@
 import { authAPI } from '../api/api'
-import { Dispatch } from 'redux'
+import { FormDataType } from '../components/Login/Login'
+import { AppDispatch } from './store'
 
 const initialState: AuthStateType = {
   id: null,
@@ -25,25 +26,39 @@ export const authReducer = (state: AuthStateType = initialState, action: Actions
     case 'SET-USER-DATA':
       return {
         ...state,
-        ...action.data,
-        isAuth: true
+        ...action.payload,
       }
     default:
       return state
   }
 }
 
-export const setAuthUserData = (data: AuthStateType) => ({
+export const setAuthUserData = (payload: AuthStateType) => ({
   type: 'SET-USER-DATA' as const,
-  data
+  payload,
 })
 
-export const getAuthUserData = () => (dispatch: Dispatch) => {
-
+export const getAuthUserData = () => (dispatch: AppDispatch) => {
   authAPI.me().then((data) => {
-
     if (data.resultCode === 0) {
-      dispatch(setAuthUserData(data.data))
+      const { id, email, login } = data.data
+      dispatch(setAuthUserData({ id, email, login, isAuth: true }))
+    }
+  })
+}
+
+export const login = (param: FormDataType) => (dispatch: AppDispatch) => {
+  authAPI.login(param).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(getAuthUserData())
+    }
+  })
+}
+
+export const logout = () => (dispatch: AppDispatch) => {
+  authAPI.logout().then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(setAuthUserData({ id: null, email: null, login: null, isAuth: false }))
     }
   })
 }

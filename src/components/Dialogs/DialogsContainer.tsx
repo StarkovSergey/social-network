@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/store'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux'
+import { ComponentType } from 'react'
 
 type MapDispatchToPropsReturnType = {
   addMessage: (newMessageText: string) => void
@@ -19,8 +20,8 @@ const mapStateToProps = (state: AppStateType): DialogsPageType & { isAuth: boole
   }
 }
 
-export const DialogsContainer = compose<React.ComponentType>(
-  connect(mapStateToProps, { addMessage}),
+export const DialogsContainer = compose<ComponentType>(
+  connect(mapStateToProps, { addMessage }),
   withAuthRedirect
 )(Dialogs)
 // compose - функция из Redux. Смысл: возьми Dialogs, передай в withAuthRedirect, затем результат передай в следующую функцию ()

@@ -26,7 +26,9 @@ type GetUsersResponse = {
 
 export const usersAPI = {
   getUsers(currentPage: number = 1, pageSize: number = 10) {
-    return instance.get<GetUsersResponse>(`users?page=${currentPage}&count=${pageSize}`).then((response) => response.data)
+    return instance
+      .get<GetUsersResponse>(`users?page=${currentPage}&count=${pageSize}`)
+      .then((response) => response.data)
   },
   unfollow(userID: string) {
     return instance.delete<ResponseType>(`follow/${userID}`).then((response) => response.data)
@@ -52,10 +54,12 @@ export const authAPI = {
   me() {
     return instance.get<ResponseType<AuthStateType>>(`auth/me`).then((response) => response.data)
   },
-  login({email, password, rememberMe}: FormDataType) {
-    return instance.post<ResponseType>(`auth/login`, {email, password, rememberMe})
-      .then((response) => {
-        console.log(response)
-      })
-  }
+  login({ email, password, rememberMe = false }: FormDataType) {
+    return instance
+      .post<ResponseType<{ userId: string }>>(`auth/login`, { email, password, rememberMe })
+      .then((response) => response.data)
+  },
+  logout() {
+    return instance.delete<ResponseType>(`auth/login`).then((response) => response.data)
+  },
 }
