@@ -1,6 +1,7 @@
 import { authAPI } from '../api/api'
 import { FormDataType } from '../components/Login/Login'
 import { AppDispatch } from './store'
+import { SetStatus } from '../components/Login/LoginFormik'
 
 const initialState: AuthStateType = {
   id: null,
@@ -47,10 +48,12 @@ export const getAuthUserData = () => (dispatch: AppDispatch) => {
   })
 }
 
-export const login = (param: FormDataType) => (dispatch: AppDispatch) => {
+export const login = (param: FormDataType, setStatus: SetStatus) => (dispatch: AppDispatch) => {
   authAPI.login(param).then((data) => {
     if (data.resultCode === 0) {
       dispatch(getAuthUserData())
+    } else {
+      setStatus({ error: data.messages })
     }
   })
 }

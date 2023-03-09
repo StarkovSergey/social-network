@@ -2,8 +2,10 @@ import { Field, Form, Formik } from 'formik'
 import React, { FC } from 'react'
 import { FormDataType } from './Login'
 
+export type SetStatus = (status?: any) => void
+
 type PropsType = {
-  onSubmit: (value: FormDataType) => void
+  onSubmit: (value: FormDataType, setStatus: SetStatus) => void
 }
 
 export const LoginFormik: FC<PropsType> = ({ onSubmit }) => {
@@ -29,10 +31,10 @@ export const LoginFormik: FC<PropsType> = ({ onSubmit }) => {
 
         return errors
       }}
-      onSubmit={(values) => {
-        onSubmit(values)
+      onSubmit={(values, submitProps) => {
+        onSubmit(values, submitProps.setStatus)
       }}>
-      {({ isSubmitting, errors, touched }) => (
+      {({ isSubmitting, errors, touched, status }) => (
         <Form>
           <div>
             <Field type="email" name="email" placeholder="email" autocompleted="off" />
@@ -48,9 +50,8 @@ export const LoginFormik: FC<PropsType> = ({ onSubmit }) => {
             <Field type="checkbox" name="rememberMe" />
             Remember me
           </label>
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+          <button type="submit">Submit</button>
+          <p>{status && status.error[0]}</p>
         </Form>
       )}
     </Formik>

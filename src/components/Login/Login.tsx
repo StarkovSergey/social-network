@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import style from './Login.module.css'
-import { LoginFormik } from './LoginFormik'
+import { LoginFormik, SetStatus } from './LoginFormik'
 import { connect } from 'react-redux'
 import { login } from '../../redux/auth-reducer'
 import { AppStateType } from '../../redux/store'
@@ -13,8 +13,8 @@ export type FormDataType = {
 }
 
 export const Login: FC<LoginProps> = (props) => {
-  const onSubmit = (values: FormDataType) => {
-    props.login(values)
+  const onSubmit = (values: FormDataType, setStatus: SetStatus) => {
+    props.login(values, setStatus)
   }
 
   if (props.isAuth) {
@@ -31,7 +31,7 @@ export const Login: FC<LoginProps> = (props) => {
 }
 
 type LoginProps = {
-  login: (param: FormDataType) => void
+  login: (param: FormDataType, setStatus: any) => void
 } & ReturnType<typeof mapStateToProps>
 
 const mapStateToProps = (state: AppStateType) => ({
