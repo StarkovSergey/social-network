@@ -18,9 +18,7 @@ export type AuthStateType = {
   isAuth: boolean
 }
 
-type SetUserDataAT = ReturnType<typeof setAuthUserData>
-
-type ActionsType = SetUserDataAT
+type ActionsType = ReturnType<typeof setAuthUserData>
 
 export const authReducer = (state: AuthStateType = initialState, action: ActionsType): AuthStateType => {
   switch (action.type) {
@@ -40,7 +38,7 @@ export const setAuthUserData = (payload: AuthStateType) => ({
 })
 
 export const getAuthUserData = () => (dispatch: AppDispatch) => {
-  authAPI.me().then((data) => {
+  return authAPI.me().then((data) => {
     if (data.resultCode === 0) {
       const { id, email, login } = data.data
       dispatch(setAuthUserData({ id, email, login, isAuth: true }))
