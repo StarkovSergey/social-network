@@ -1,10 +1,18 @@
 import { connect } from 'react-redux'
-import { AppStateType } from '../../redux/store'
-import { follow, getUsers, setCurrentPage, unfollow, UsersPageType } from '../../redux/users-reducer'
+import { AppStateType } from 'redux/store'
+import { follow, getUsers, setCurrentPage, unfollow, UsersPageType } from 'redux/users-reducer'
 import React from 'react'
 import { Users } from './Users'
-import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { withAuthRedirect } from 'hoc/withAuthRedirect'
 import { compose } from 'redux'
+import {
+  selectCurrentPage,
+  selectIsFetching,
+  selectIsFollowingInProgress,
+  selectPageSize,
+  selectTotalUsersCount,
+  selectUsers,
+} from '../../redux/users-selectors'
 
 export class UsersAPIContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
@@ -39,12 +47,12 @@ export type UsersPropsType = MapDispatchToPropsType & UsersPageType
 
 const mapStateToProps = (state: AppStateType): UsersPageType => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching,
-    isFollowingInProgress: state.usersPage.isFollowingInProgress,
+    users: selectUsers(state),
+    pageSize: selectPageSize(state),
+    totalUsersCount: selectTotalUsersCount(state),
+    currentPage: selectCurrentPage(state),
+    isFetching: selectIsFetching(state),
+    isFollowingInProgress: selectIsFollowingInProgress(state),
   }
 }
 

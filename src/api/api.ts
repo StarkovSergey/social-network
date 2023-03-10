@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { UserType } from '../redux/users-reducer'
-import { ProfileType } from '../redux/profile-reducer'
-import { AuthStateType } from '../redux/auth-reducer'
-import { FormDataType } from '../components/Login/Login'
+import { UserType } from 'redux/users-reducer'
+import { ProfileType } from 'redux/profile-reducer'
+import { AuthStateType } from 'redux/auth-reducer'
+import { FormDataType } from 'components/Login/Login'
 
 const instance = axios.create({
   withCredentials: true,
