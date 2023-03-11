@@ -10,7 +10,7 @@ type LocalStateType = {
   statusText: string
 }
 
-export class ProfileStatus extends React.Component<any, any> {
+export class ProfileStatus extends React.Component<PropsType, LocalStateType> {
   constructor(props: PropsType) {
     super(props)
     this.state = {
@@ -33,7 +33,7 @@ export class ProfileStatus extends React.Component<any, any> {
   componentDidUpdate(prevProps: PropsType, prevState: LocalStateType) {
     if (prevProps.status !== this.props.status) {
       this.setState({
-        status: this.props.status,
+        statusText: this.props.status,
       })
     }
   }

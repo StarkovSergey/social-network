@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import style from './ProfileInfo.module.css'
 import { Loader } from '../../common/Loader/Loader'
 import { ProfileType } from '../../../redux/profile-reducer'
 import userPlaceholderPhoto from '../../../assets/images/user-placeholder.png'
-import { ProfileStatus } from './ProfileStatus'
+import { ProfileStatusWithHooks } from './ProfileStatusWithHooks'
 
 type PropsType = {
   profile: ProfileType
@@ -13,7 +13,7 @@ type PropsType = {
 
 export const ProfileInfo = (props: PropsType) => {
   if (!props.profile) {
-    return <Loader/>
+    return <Loader />
   }
 
   return (
@@ -23,11 +23,11 @@ export const ProfileInfo = (props: PropsType) => {
       </div>
       <div className={style.description}>
         <div className={style.photo}>
-          <img src={props.profile.photos.large || userPlaceholderPhoto} alt={"user"}/>
+          <img src={props.profile.photos.large || userPlaceholderPhoto} alt={'user'} />
         </div>
         <b className={style.name}>{props.profile.fullName}</b>
         <p>{props.profile.aboutMe}</p>
-        <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+        <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} id={props.profile.userId} />
       </div>
       <div className={style.contacts}>
         <h3 className={style.title}>Contacts</h3>
@@ -44,5 +44,5 @@ export const ProfileInfo = (props: PropsType) => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
