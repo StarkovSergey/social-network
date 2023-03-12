@@ -1,6 +1,4 @@
-import React, { ChangeEvent, useState, FC, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { getStatus } from '../../../redux/profile-reducer'
+import React, { ChangeEvent, FC, useState } from 'react'
 
 type PropsType = {
   status: string
@@ -9,7 +7,6 @@ type PropsType = {
 }
 
 export const ProfileStatusWithHooks: FC<PropsType> = (props) => {
-  const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false)
   const [status, setStatus] = useState(props.status)
 
@@ -23,10 +20,6 @@ export const ProfileStatusWithHooks: FC<PropsType> = (props) => {
   const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setStatus(evt.currentTarget.value)
   }
-
-  useEffect(() => {
-    dispatch(getStatus(String(props.id)))
-  }, [])
 
   return (
     <div>

@@ -45,7 +45,6 @@ class App extends React.Component<AppProps> {
 }
 
 type AppProps = {
-  getAuthUserData: () => void
   initializeApp: () => void
 } & ReturnType<typeof mapStateToProps>
 

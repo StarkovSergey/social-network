@@ -1,10 +1,11 @@
 import style from './MyPosts.module.css'
 import { Post } from './Post/Post'
-import React from 'react'
+import React, { memo } from 'react'
 import { MyPostsPropsType } from './MyPostsContainer'
 import { Field, Form, Formik } from 'formik'
 
-export const MyPosts = (props: MyPostsPropsType) => {
+export const MyPosts = memo((props: MyPostsPropsType) => {
+  // TODO: memo не работает - приходят разные пропсы 3 раза. Стоит исправить!
   const postsElements = props.posts.map((post) => (
     <Post message={post.message} likesCount={post.likesCount} key={post.id} id={post.id} />
   ))
@@ -22,47 +23,45 @@ export const MyPosts = (props: MyPostsPropsType) => {
       <div className={style.posts}>{postsElements}</div>
     </div>
   )
-}
+})
 
-const AddPostForm: React.FC<{onSubmit: (values: FormDataType) => void}> = (props) => {
+const AddPostForm: React.FC<{ onSubmit: (values: FormDataType) => void }> = (props) => {
   return (
-  <Formik
-    initialValues={{
-      newPostText: '',
-    }}
-    validate={(values) => {
-      const errors: { newPostText?: string } = {}
+    <Formik
+      initialValues={{
+        newPostText: '',
+      }}
+      validate={(values) => {
+        const errors: { newPostText?: string } = {}
 
-      if (!values.newPostText) {
-        errors.newPostText = 'Required'
-      }
+        if (!values.newPostText) {
+          errors.newPostText = 'Required'
+        }
 
-      return errors
-    }}
-
-    onSubmit={(values, { setSubmitting }) => {
-      console.log(values)
-      props.onSubmit(values)
-      setSubmitting(false)
-    }}>
-    {({ isSubmitting, errors, touched }) => (
-      <Form>
+        return errors
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log(values)
+        props.onSubmit(values)
+        setSubmitting(false)
+      }}>
+      {({ isSubmitting, errors, touched }) => (
+        <Form>
           <div>
             <div>
               <Field component="textarea" name="newPostText" placeholder="Enter your post..." />
             </div>
           </div>
-        {errors.newPostText && touched.newPostText && errors.newPostText}
+          {errors.newPostText && touched.newPostText && errors.newPostText}
 
-        <button type="submit" disabled={isSubmitting}>
-          Add post
-        </button>
-      </Form>
-    )}
-  </Formik>
+          <button type="submit" disabled={isSubmitting}>
+            Add post
+          </button>
+        </Form>
+      )}
+    </Formik>
   )
 }
-
 
 type FormDataType = {
   newPostText: string
