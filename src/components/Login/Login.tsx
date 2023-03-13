@@ -12,12 +12,12 @@ export type FormDataType = {
   rememberMe: boolean
 }
 
-export const Login: FC<LoginProps> = (props) => {
+export const Login: FC<LoginProps> = ({ login, isAuth }) => {
   const onSubmit = (values: FormDataType, setStatus: SetStatus) => {
-    props.login(values, setStatus)
+    login(values, setStatus)
   }
 
-  if (props.isAuth) {
+  if (isAuth) {
     return <Redirect to={'/profile'} />
   }
 

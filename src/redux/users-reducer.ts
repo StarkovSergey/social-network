@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import { usersAPI } from '../api/api'
+import { updateObjectInArray } from '../utils/object-helpers'
 
 export type UsersPageType = typeof initialState
 
@@ -72,12 +73,12 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     case 'FOLLOW':
       return {
         ...state,
-        users: state.users.map((user) => (user.id === action.id ? { ...user, followed: true } : user)),
+        users: updateObjectInArray(state.users, action.id, { followed: true }),
       }
     case 'UNFOLLOW':
       return {
         ...state,
-        users: state.users.map((user) => (user.id === action.id ? { ...user, followed: false } : user)),
+        users: updateObjectInArray(state.users, action.id, { followed: false }),
       }
     case 'SET-USERS':
       return {
@@ -111,10 +112,22 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
   }
 }
 
-export const followSuccess = (id: string): FollowUserAT => ({ type: 'FOLLOW', id })
-export const unfollowSuccess = (id: string): UnfollowUserAT => ({ type: 'UNFOLLOW', id })
-export const setUsers = (users: UserType[]): SetUsersAT => ({ type: 'SET-USERS', users })
-export const setCurrentPage = (currentPage: number): SetCurrentPageAT => ({ type: 'SET-CURRENT-PAGE', currentPage })
+export const followSuccess = (id: string): FollowUserAT => ({
+  type: 'FOLLOW',
+  id,
+})
+export const unfollowSuccess = (id: string): UnfollowUserAT => ({
+  type: 'UNFOLLOW',
+  id,
+})
+export const setUsers = (users: UserType[]): SetUsersAT => ({
+  type: 'SET-USERS',
+  users,
+})
+export const setCurrentPage = (currentPage: number): SetCurrentPageAT => ({
+  type: 'SET-CURRENT-PAGE',
+  currentPage,
+})
 export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountAT => ({
   type: 'SET-TOTAL-USERS-COUNT',
   totalUsersCount,
@@ -129,35 +142,34 @@ export const toggleIsFollowingInProgress = (id: string, isFetching: boolean) => 
   id,
 })
 
-export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const getUsers = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
   dispatch(toggleIsFetching(true))
 
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
-    dispatch(toggleIsFetching(false))
-    dispatch(setUsers(data.items))
-    dispatch(setTotalUsersCount(data.totalCount))
-  })
+  const data = await usersAPI.getUsers(currentPage, pageSize)
+  dispatch(toggleIsFetching(false))
+  dispatch(setUsers(data.items))
+  dispatch(setTotalUsersCount(data.totalCount))
 }
 
-export const follow = (id: string) => (dispatch: Dispatch) => {
+export const followUnfollowFlow = async (
+  dispatch: Dispatch,
+  id: string,
+  apiMethod: Function,
+  actionCreator: Function
+) => {
   dispatch(toggleIsFollowingInProgress(id, true))
-  usersAPI.follow(id).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(followSuccess(id))
-    }
-
-    dispatch(toggleIsFollowingInProgress(id, false))
-  })
+  const data = await apiMethod(id)
+  if (data.resultCode === 0) {
+    dispatch(actionCreator(id))
+  }
+  dispatch(toggleIsFollowingInProgress(id, false))
 }
 
-export const unfollow = (id: string) => (dispatch: Dispatch) => {
-  dispatch(toggleIsFollowingInProgress(id, true))
-  usersAPI.unfollow(id).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(unfollowSuccess(id))
-    }
-
-    dispatch(toggleIsFollowingInProgress(id, false))
-  })
+export const follow = (id: string) => async (dispatch: Dispatch) => {
+  // т.к. мы выносим в переменную метод, и будет использовать его в отрыве от объекта, то он может потерять контекст. Стоит сделать bind
+  followUnfollowFlow(dispatch, id, usersAPI.follow.bind(usersAPI), followSuccess)
 }
 
+export const unfollow = (id: string) => async (dispatch: Dispatch) => {
+  followUnfollowFlow(dispatch, id, usersAPI.unfollow.bind(usersAPI), unfollowSuccess)
+}
