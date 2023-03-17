@@ -20,8 +20,5 @@ const mapStateToProps = (state: AppStateType): DialogsPageType & { isAuth: boole
   }
 }
 
-export const DialogsContainer = compose<ComponentType>(
-  connect(mapStateToProps, { addMessage }),
-  withAuthRedirect
-)(Dialogs)
+export default compose<ComponentType>(connect(mapStateToProps, { addMessage }), withAuthRedirect)(Dialogs)
 // compose - функция из Redux. Смысл: возьми Dialogs, передай в withAuthRedirect, затем результат передай в следующую функцию ()

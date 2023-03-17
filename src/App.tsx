@@ -1,20 +1,21 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import './App.css'
 import { Navbar } from './components/Navbar/Navbar'
-import { Route, withRouter } from 'react-router-dom'
+import { BrowserRouter, Route, withRouter } from 'react-router-dom'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
-import { DialogsContainer } from './components/Dialogs/DialogsContainer'
 import { UsersContainer } from './components/Users/UsersContainer'
-import { ProfileContainer } from './components/Profile/ProfileContainer'
 import HeaderContainer from './components/Header/HeaderContainer'
-import { LoginContainer } from './components/Login/Login'
-import { connect } from 'react-redux'
+import { connect, Provider } from 'react-redux'
 import { compose } from 'redux'
 import { initializeApp } from './redux/app-reducer'
-import { AppStateType } from './redux/store'
+import { AppStateType, store } from './redux/store'
 import { Loader } from './components/common/Loader/Loader'
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
+const LoginContainer = React.lazy(() => import('./components/Login/Login'))
 
 class App extends React.Component<AppProps> {
   componentDidMount() {
@@ -31,13 +32,34 @@ class App extends React.Component<AppProps> {
         <HeaderContainer />
         <Navbar />
         <main className="app-wrapper-content">
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
-          <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+          <Route
+            path="/dialogs"
+            render={() => (
+              <Suspense fallback={<Loader />}>
+                <DialogsContainer />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="/profile/:userId?"
+            render={() => (
+              <Suspense fallback={<Loader />}>
+                <ProfileContainer />
+              </Suspense>
+            )}
+          />
           <Route path="/news" render={News} />
           <Route path="/music" render={Music} />
           <Route path="/settings" render={Settings} />
           <Route path="/users" render={() => <UsersContainer />} />
-          <Route path="/login" render={() => <LoginContainer />} />
+          <Route
+            path="/login"
+            render={() => (
+              <Suspense fallback={<Loader />}>
+                <LoginContainer />
+              </Suspense>
+            )}
+          />
         </main>
       </div>
     )
@@ -58,3 +80,11 @@ export const AppContainer = compose<React.ComponentType>(
   }),
   withRouter
 )(App)
+
+export const SamuraiJSApp = () => (
+  <BrowserRouter>
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  </BrowserRouter>
+)

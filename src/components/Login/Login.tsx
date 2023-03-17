@@ -38,6 +38,6 @@ const mapStateToProps = (state: AppStateType) => ({
   isAuth: state.auth.isAuth,
 })
 
-export const LoginContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   login,
 })(Login)

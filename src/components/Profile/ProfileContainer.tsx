@@ -52,7 +52,7 @@ const mapStateToProps = (state: AppStateType) => ({
   authorizedUserId: state.auth.id,
 })
 
-export const ProfileContainer = compose<React.ComponentType>(
+export default compose<React.ComponentType>(
   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }),
   withRouter
   // withAuthRedirect
