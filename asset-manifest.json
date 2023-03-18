@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/social-network/static/css/main.0636a09b.css",
+    "main.js": "/social-network/static/js/main.918dfeaf.js",
+    "static/css/181.76f13fb3.chunk.css": "/social-network/static/css/181.76f13fb3.chunk.css",
+    "static/js/181.73855132.chunk.js": "/social-network/static/js/181.73855132.chunk.js",
+    "static/css/53.ae1d1edd.chunk.css": "/social-network/static/css/53.ae1d1edd.chunk.css",
+    "static/js/53.bcf7f814.chunk.js": "/social-network/static/js/53.bcf7f814.chunk.js",
+    "static/css/983.22d2c20f.chunk.css": "/social-network/static/css/983.22d2c20f.chunk.css",
+    "static/js/983.d57027fc.chunk.js": "/social-network/static/js/983.d57027fc.chunk.js",
+    "static/js/783.8853a6e7.chunk.js": "/social-network/static/js/783.8853a6e7.chunk.js",
+    "static/media/user-placeholder.png": "/social-network/static/media/user-placeholder.4cf0316812177f7894cb.png",
+    "static/media/Lord-Of-The-Rings-PNG-Photos.png": "/social-network/static/media/Lord-Of-The-Rings-PNG-Photos.54f8f9515b30b5198c7e.png",
+    "static/media/loader.svg": "/social-network/static/media/loader.fa1c8fdb9d8fa91f3173973ed296c02e.svg",
+    "index.html": "/social-network/index.html",
+    "main.0636a09b.css.map": "/social-network/static/css/main.0636a09b.css.map",
+    "main.918dfeaf.js.map": "/social-network/static/js/main.918dfeaf.js.map",
+    "181.76f13fb3.chunk.css.map": "/social-network/static/css/181.76f13fb3.chunk.css.map",
+    "181.73855132.chunk.js.map": "/social-network/static/js/181.73855132.chunk.js.map",
+    "53.ae1d1edd.chunk.css.map": "/social-network/static/css/53.ae1d1edd.chunk.css.map",
+    "53.bcf7f814.chunk.js.map": "/social-network/static/js/53.bcf7f814.chunk.js.map",
+    "983.22d2c20f.chunk.css.map": "/social-network/static/css/983.22d2c20f.chunk.css.map",
+    "983.d57027fc.chunk.js.map": "/social-network/static/js/983.d57027fc.chunk.js.map",
+    "783.8853a6e7.chunk.js.map": "/social-network/static/js/783.8853a6e7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0636a09b.css",
+    "static/js/main.918dfeaf.js"
+  ]
+}
