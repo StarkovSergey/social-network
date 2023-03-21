@@ -7,6 +7,11 @@ export type PostType = {
   likesCount: number
 }
 
+export type Photos = {
+  small: string
+  large: string
+}
+
 export type ProfileType = null | {
   userId: number
   lookingForAJob: boolean
@@ -22,10 +27,7 @@ export type ProfileType = null | {
     youtube: string
     mainLink: string
   }
-  photos: {
-    small: string
-    large: string
-  }
+  photos: Photos
   aboutMe: string
 }
 
@@ -40,6 +42,7 @@ type ActionsType =
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>
   | ReturnType<typeof deletePost>
+  | ReturnType<typeof savePhotoSuccess>
 
 const initialState: ProfilePageType = {
   posts: [
@@ -91,6 +94,14 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         ...state,
         posts: state.posts.filter((post) => post.id !== action.id),
       }
+    case 'SAVE-PHOTO-SUCCESS':
+      return {
+        ...state,
+        profile: {
+          ...state.profile!,
+          photos: action.photos,
+        },
+      }
     default:
       return state
   }
@@ -116,6 +127,11 @@ export const deletePost = (id: number) => ({
   id,
 })
 
+export const savePhotoSuccess = (photos: Photos) => ({
+  type: 'SAVE-PHOTO-SUCCESS' as const,
+  photos,
+})
+
 export const getUserProfile = (id: string) => async (dispatch: Dispatch) => {
   const data = await profileAPI.getProfile(id)
   dispatch(setUserProfile(data))
@@ -130,5 +146,12 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
   const response = await profileAPI.updateStatus(status)
   if (response.data.resultCode === 0) {
     dispatch(setStatus(status))
+  }
+}
+
+export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
+  const response = await profileAPI.savePhoto(file)
+  if (response.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(response.data.data.photos))
   }
 }

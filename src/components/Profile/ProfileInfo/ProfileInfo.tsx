@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import style from './ProfileInfo.module.css'
 import { Loader } from '../../common/Loader/Loader'
 import { ProfileType } from '../../../redux/profile-reducer'
@@ -8,12 +8,20 @@ import { ProfileStatusWithHooks } from './ProfileStatusWithHooks'
 type PropsType = {
   profile: ProfileType
   status: string
+  isOwner: boolean
   updateStatus: (status: string) => void
+  savePhoto: (photo: File) => void
 }
 
 export const ProfileInfo = (props: PropsType) => {
   if (!props.profile) {
     return <Loader />
+  }
+
+  const mainPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files?.length) {
+      props.savePhoto(e.currentTarget.files[0])
+    }
   }
 
   return (
@@ -25,6 +33,8 @@ export const ProfileInfo = (props: PropsType) => {
         <div className={style.photo}>
           <img src={props.profile.photos.large || userPlaceholderPhoto} alt={'user'} />
         </div>
+        {props.isOwner && <input type="file" onChange={mainPhotoHandler} />}
+
         <b className={style.name}>{props.profile.fullName}</b>
         <p>{props.profile.aboutMe}</p>
         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} id={props.profile.userId} />
