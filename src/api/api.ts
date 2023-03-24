@@ -67,12 +67,18 @@ export const authAPI = {
   me() {
     return instance.get<ResponseType<AuthStateType>>(`auth/me`).then((response) => response.data)
   },
-  login({ email, password, rememberMe = false }: FormDataType) {
-    return instance
-      .post<ResponseType<{ userId: string }>>(`auth/login`, { email, password, rememberMe })
-      .then((response) => response.data)
+  login(params: FormDataType) {
+    return instance.post<ResponseType<{ userId: string }>>(`auth/login`, params).then((response) => response.data)
   },
   logout() {
     return instance.delete<ResponseType>(`auth/login`).then((response) => response.data)
+  },
+}
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return instance.get<{ url: string }>(`security/get-captcha-url`).then((res) => {
+      return res.data
+    })
   },
 }

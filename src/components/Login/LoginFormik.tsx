@@ -6,15 +6,17 @@ export type SetStatus = (status?: any) => void
 
 type PropsType = {
   onSubmit: (value: FormDataType, setStatus: SetStatus) => void
+  captchaUrl?: string | null
 }
 
-export const LoginFormik: FC<PropsType> = ({ onSubmit }) => {
+export const LoginFormik: FC<PropsType> = ({ onSubmit, captchaUrl }) => {
   return (
     <Formik
       initialValues={{
         email: '',
         password: '',
         rememberMe: false,
+        captcha: '',
       }}
       validate={(values) => {
         const errors: { email?: string; password?: string } = {}
@@ -52,6 +54,15 @@ export const LoginFormik: FC<PropsType> = ({ onSubmit }) => {
           </label>
           <button type="submit">Submit</button>
           <p>{status && status.error[0]}</p>
+          {captchaUrl && (
+            <div>
+              <img src={captchaUrl} />
+              <label>
+                <Field type="text" name="captcha" required />
+                Captcha
+              </label>
+            </div>
+          )}
         </Form>
       )}
     </Formik>

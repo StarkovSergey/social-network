@@ -10,9 +10,10 @@ export type FormDataType = {
   email: string
   password: string
   rememberMe: boolean
+  captcha?: string
 }
 
-export const Login: FC<LoginProps> = ({ login, isAuth }) => {
+export const Login: FC<LoginProps> = ({ login, isAuth, captchaUrl }) => {
   const onSubmit = (values: FormDataType, setStatus: SetStatus) => {
     login(values, setStatus)
   }
@@ -25,7 +26,7 @@ export const Login: FC<LoginProps> = ({ login, isAuth }) => {
     <div className={style['login-section']}>
       <h1>Login</h1>
 
-      <LoginFormik onSubmit={onSubmit} />
+      <LoginFormik onSubmit={onSubmit} captchaUrl={captchaUrl} />
     </div>
   )
 }
@@ -35,6 +36,7 @@ type LoginProps = {
 } & ReturnType<typeof mapStateToProps>
 
 const mapStateToProps = (state: AppStateType) => ({
+  captchaUrl: state.auth.captchaUrl,
   isAuth: state.auth.isAuth,
 })
 
