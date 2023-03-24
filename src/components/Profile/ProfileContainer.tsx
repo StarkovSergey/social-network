@@ -1,17 +1,12 @@
 import React from 'react'
 import { Profile } from './Profile'
 import { connect } from 'react-redux'
-import { getStatus, getUserProfile, savePhoto, updateStatus } from '../../redux/profile-reducer'
+import { getStatus, getUserProfile, savePhoto, saveProfile, updateStatus } from '../../redux/profile-reducer'
 import { AppStateType } from '../../redux/store'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-
-type MapDispatchToPropsType = {
-  getUserProfile: (id: string) => void
-  getStatus: (id: string) => void
-  updateStatus: (status: string) => void
-  savePhoto: (photo: File) => void
-}
+import { FormData } from './ProfileInfo/ProfileDataForm/ProfileDataForm'
+import { SetStatus } from '../Login/LoginFormik'
 
 type PathParamsType = {
   userId: string
@@ -56,6 +51,7 @@ class ProfileAPIContainer extends React.Component<PropsType> {
         status={this.props.status}
         updateStatus={this.props.updateStatus}
         savePhoto={this.props.savePhoto}
+        saveProfile={this.props.saveProfile}
       />
     )
   }
@@ -68,12 +64,21 @@ const mapStateToProps = (state: AppStateType) => ({
   authorizedUserId: state.auth.id,
 })
 
+type MapDispatchToPropsType = {
+  getUserProfile: (id: string) => void
+  getStatus: (id: string) => void
+  updateStatus: (status: string) => void
+  savePhoto: (photo: File) => void
+  saveProfile: (profileForm: FormData, setStatus: SetStatus) => Promise<any>
+}
+
 export default compose<React.ComponentType>(
   connect(mapStateToProps, {
     getUserProfile,
     getStatus,
     updateStatus,
     savePhoto,
+    saveProfile,
   }),
   withRouter
   // withAuthRedirect

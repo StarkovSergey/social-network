@@ -58,6 +58,9 @@ export const profileAPI = {
       },
     })
   },
+  saveProfile(profileForm: FormData) {
+    return instance.put(`profile`, profileForm)
+  },
 }
 
 export const authAPI = {

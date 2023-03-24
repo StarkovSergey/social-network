@@ -1,5 +1,7 @@
 import { Dispatch } from 'redux'
 import { profileAPI } from '../api/api'
+import { AppDispatch, AppStateType } from './store'
+import { SetStatus } from '../components/Login/LoginFormik'
 
 export type PostType = {
   id: number
@@ -17,18 +19,20 @@ export type ProfileType = null | {
   lookingForAJob: boolean
   lookingForAJobDescription: string
   fullName: string
-  contacts: {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
-  }
+  contacts: ContactsType
   photos: Photos
   aboutMe: string
+}
+
+export type ContactsType = {
+  github: string
+  vk: string
+  facebook: string
+  instagram: string
+  twitter: string
+  website: string
+  youtube: string
+  mainLink: string
 }
 
 export type ProfilePageType = {
@@ -155,3 +159,15 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
     dispatch(savePhotoSuccess(response.data.data.photos))
   }
 }
+
+export const saveProfile =
+  (profileForm: FormData, setStatus: SetStatus) => async (dispatch: AppDispatch, getState: () => AppStateType) => {
+    const response = await profileAPI.saveProfile(profileForm)
+    if (response.data.resultCode === 0) {
+      const state = getState()
+      dispatch(getUserProfile(state.auth.id!))
+    } else {
+      setStatus({ error: response.data.messages })
+      return Promise.reject(response.data.messages)
+    }
+  }
