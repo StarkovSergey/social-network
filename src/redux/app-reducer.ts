@@ -3,10 +3,12 @@ import { getAuthUserData } from './auth-reducer'
 
 const initialState: AppStateType = {
   isInitialized: false,
+  appError: null,
 }
 
 type AppStateType = {
   isInitialized: boolean
+  appError: null | string
 }
 
 type ActionsType = ReturnType<typeof setInitializedSuccess>

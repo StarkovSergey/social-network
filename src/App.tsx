@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react'
+import React, { ComponentType, Suspense } from 'react'
 import './App.css'
 import { Navbar } from './components/Navbar/Navbar'
-import { BrowserRouter, HashRouter, Route, withRouter } from 'react-router-dom'
+import { HashRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
@@ -18,8 +18,17 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 const LoginContainer = React.lazy(() => import('./components/Login/Login'))
 
 class App extends React.Component<AppProps> {
+  catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
+    alert('Some error occured')
+  }
+
   componentDidMount() {
     this.props.initializeApp()
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
   }
 
   render() {
@@ -32,34 +41,37 @@ class App extends React.Component<AppProps> {
         <HeaderContainer />
         <Navbar />
         <main className="app-wrapper-content">
-          <Route
-            path="/dialogs"
-            render={() => (
-              <Suspense fallback={<Loader />}>
-                <DialogsContainer />
-              </Suspense>
-            )}
-          />
-          <Route
-            path="/profile/:userId?"
-            render={() => (
-              <Suspense fallback={<Loader />}>
-                <ProfileContainer />
-              </Suspense>
-            )}
-          />
-          <Route path="/news" render={News} />
-          <Route path="/music" render={Music} />
-          <Route path="/settings" render={Settings} />
-          <Route path="/users" render={() => <UsersContainer />} />
-          <Route
-            path="/login"
-            render={() => (
-              <Suspense fallback={<Loader />}>
-                <LoginContainer />
-              </Suspense>
-            )}
-          />
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/profile" />} />
+            <Route
+              path="/dialogs"
+              render={() => (
+                <Suspense fallback={<Loader />}>
+                  <DialogsContainer />
+                </Suspense>
+              )}
+            />
+            <Route
+              path="/profile/:userId?"
+              render={() => (
+                <Suspense fallback={<Loader />}>
+                  <ProfileContainer />
+                </Suspense>
+              )}
+            />
+            <Route path="/news" render={News} />
+            <Route path="/music" render={Music} />
+            <Route path="/settings" render={Settings} />
+            <Route path="/users" render={() => <UsersContainer />} />
+            <Route
+              path="/login"
+              render={() => (
+                <Suspense fallback={<Loader />}>
+                  <LoginContainer />
+                </Suspense>
+              )}
+            />
+          </Switch>
         </main>
       </div>
     )
@@ -74,11 +86,11 @@ const mapStateToProps = (state: AppStateType) => ({
   isInitialized: state.app.isInitialized,
 })
 
-export const AppContainer = compose<React.ComponentType>(
+export const AppContainer = compose<ComponentType>(
+  withRouter,
   connect(mapStateToProps, {
     initializeApp,
-  }),
-  withRouter
+  })
 )(App)
 
 export const SamuraiJSApp = () => (
